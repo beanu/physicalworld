@@ -10,17 +10,17 @@ import info.u250.c2d.physical.box2d.loader.cbt.data.JointData;
 
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.zhaoyunhe.pw.props.box2d.Box;
+import com.zhaoyunhe.pw.props.box2d.BoxHelper;
 
 public class Box2dAdapter extends ShapeGroup {
-	final Box box;
+	final BoxHelper box;
 	public final CbtWorldReader data;
 	final Cb2ObjectGroup group;
 	final ShapeRenderer render;
 	boolean runMode = false;
 
 	public Box2dAdapter() {
-		box = new Box(this);
+		box = new BoxHelper(this);
 		data = new CbtWorldReader();
 		group = new Cb2ObjectGroup();
 		render = Engine.getShapeRenderer();
