@@ -1,17 +1,21 @@
 package com.zhaoyunhe.pw.ui;
 
 import info.u250.c2d.engine.Engine;
+import info.u250.c2d.input.PhysicalFingerInput;
 import info.u250.c2d.physical.box2d.Cb2World;
 import info.u250.c2d.utils.UiUtils;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.zhaoyunhe.pw.IControl;
+import com.zhaoyunhe.pw.IScene;
+import com.zhaoyunhe.pw.props.Box2dAdapter;
+import com.zhaoyunhe.pw.scenes.ScenePlay;
 
 public class ShapePanel extends Group {
 
@@ -20,13 +24,15 @@ public class ShapePanel extends Group {
 	private Image jointImage;
 	
 	private Image tools_run;//TODO delete
-	private IControl control;
+	private IScene control;//TODO delete
 	
 	private TextureAtlas atlas;
+	private Box2dAdapter adapter;
 
-	public ShapePanel(IControl control) {
+	public ShapePanel(IScene control) {
 		atlas = Engine.resource("atlas");
 		this.control=control;
+		adapter=((ScenePlay)this.control).getBox2dAdapter();
 
 		boxImage = new Image(atlas.findRegion("button_box"));
 		circleImage = new Image(atlas.findRegion("button_circle"));
@@ -48,7 +54,7 @@ public class ShapePanel extends Group {
 
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				Gdx.app.log("debug", "boxImage clicked");
+				adapter.activeBoxHelper();
 			}
 
 		});
@@ -58,6 +64,7 @@ public class ShapePanel extends Group {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				Gdx.app.log("debug", "circleImage clicked");
+				adapter.activeCircleHelper();
 			}
 
 		});
@@ -71,6 +78,7 @@ public class ShapePanel extends Group {
 
 		});
 		
+		//TODO delete
 		final TextureRegionDrawable pauseRegion = new TextureRegionDrawable(atlas.findRegion("tools-pause"));
 		final TextureRegionDrawable playRegion = new TextureRegionDrawable(atlas.findRegion("tools-run"));
 		tools_run = new Image(atlas.findRegion("tools-pause"));
@@ -84,10 +92,10 @@ public class ShapePanel extends Group {
 					tools_run.setDrawable(pauseRegion);
 					control.play();
 					
-//					InputMultiplexer mul = new InputMultiplexer();
-//					mul.addProcessor(Gdx.input.getInputProcessor());
-//					mul.addProcessor(new PhysicalFingerInput(Cb2World.getInstance().createScreenBox()));
-//					Gdx.input.setInputProcessor(mul);
+					InputMultiplexer mul = new InputMultiplexer();
+					mul.addProcessor(Gdx.input.getInputProcessor());
+					mul.addProcessor(new PhysicalFingerInput(Cb2World.getInstance().createScreenBox()));
+					Gdx.input.setInputProcessor(mul);
 				}else{
 					Cb2World.getInstance().dispose();
 					

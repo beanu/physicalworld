@@ -1,17 +1,16 @@
 package com.zhaoyunhe.pw.scenes;
 
 import info.u250.c2d.engine.Engine;
-import info.u250.c2d.engine.Scene;
 import info.u250.c2d.physical.box2d.Cb2World;
 
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.zhaoyunhe.pw.IControl;
+import com.zhaoyunhe.pw.IScene;
 import com.zhaoyunhe.pw.props.Box2dAdapter;
 
-public class ScenePlay implements Scene, IControl {
+public class ScenePlay implements IScene {
 
 	Image bgImage;
 	Box2dAdapter box2dAdapter;
@@ -69,5 +68,9 @@ public class ScenePlay implements Scene, IControl {
 	@Override
 	public void stop() {
 		box2dAdapter.stop();
+	}
+
+	public Box2dAdapter getBox2dAdapter() {
+		return box2dAdapter;
 	}
 }

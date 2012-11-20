@@ -105,7 +105,7 @@ public class Box2dAdapter extends ShapeGroup implements IFileIO {
 
 	@Override
 	public InputProcessor getInputProcessor() {
-		return mBoxHelper.getInputProcessor();
+		return mulInput;
 	}
 
 	@Override
@@ -187,5 +187,69 @@ public class Box2dAdapter extends ShapeGroup implements IFileIO {
 		this.mulInput.clear();
 		// rbg.getCamera().position.set(Engine.getDefaultCamera().position);
 		runMode = false;
+	}
+
+	// void activeJointSelectHelper(){
+	// this.mulInput.clear();
+	// this.mulInput.addProcessor(jointSelectHelper.getInputProcessor());
+	// }
+	public void activeFrictionJointHelper() {
+		this.mulInput.clear();
+		this.mulInput.addProcessor(mFrictionJointHelper.getInputProcessor());
+	}
+
+	// void activePulleyJointHelper(){
+	// this.mulInput.clear();
+	// this.mulInput.addProcessor(pulleyJointHelper.getInputProcessor());
+	// }
+	// void activeWheelJointHelper(){
+	// this.mulInput.clear();
+	// this.mulInput.addProcessor(wheelJointHelper.getInputProcessor());
+	// }
+	// void activeRopeJointHelper(){
+	// this.mulInput.clear();
+	// this.mulInput.addProcessor(ropeJointHelper.getInputProcessor());
+	// }
+	public void activePrismaticJointHelper() {
+		this.mulInput.clear();
+		this.mulInput.addProcessor(mPrismaticJointHelper.getInputProcessor());
+	}
+
+	// void activeWeldJointHelper(){
+	// this.mulInput.clear();
+	// this.mulInput.addProcessor(weldJointHelper.getInputProcessor());
+	// }
+	// void activeRevoluteJointHelper(){
+	// this.mulInput.clear();
+	// this.mulInput.addProcessor(revoluteJointHelper.getInputProcessor());
+	// }
+	public void activeSelectHelper() {
+		this.mulInput.clear();
+		this.mulInput.addProcessor(mSelectedHelper.getInputProcessor());
+	}
+
+	public void activeDistanceJointHelper() {
+		this.mulInput.clear();
+		this.mulInput.addProcessor(mDistanceJointHelper.getInputProcessor());
+	}
+
+	public void activeScaleHelper() {
+		this.mulInput.clear();
+		this.mulInput.addProcessor(mScaleHelper.getInputProcessor());
+	}
+
+	public void activeRotateHelper() {
+		this.mulInput.clear();
+		this.mulInput.addProcessor(mRotateHelper.getInputProcessor());
+	}
+
+	public void activeCircleHelper() {
+		this.mulInput.clear();
+		this.mulInput.addProcessor(mCircleHelper.getInputProcessor());
+	}
+
+	public void activeBoxHelper() {
+		this.mulInput.clear();
+		this.mulInput.addProcessor(mBoxHelper.getInputProcessor());
 	}
 }
