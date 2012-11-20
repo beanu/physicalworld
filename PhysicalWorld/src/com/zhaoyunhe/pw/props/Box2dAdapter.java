@@ -90,7 +90,7 @@ public class Box2dAdapter extends ShapeGroup {
 
 	@Override
 	public InputProcessor getInputProcessor() {
-		return super.getInputProcessor();
+		return mBoxHelper.getInputProcessor();
 	}
 
 }

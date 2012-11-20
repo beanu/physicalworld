@@ -1,0 +1,63 @@
+package com.zhaoyunhe.pw.scenes;
+
+import info.u250.c2d.engine.Engine;
+import info.u250.c2d.engine.Scene;
+import info.u250.c2d.physical.box2d.Cb2World;
+
+import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.zhaoyunhe.pw.props.Box2dAdapter;
+
+public class ScenePlay implements Scene {
+
+	Image bgImage;
+	Box2dAdapter box2d;
+	UIStage ui;
+	InputMultiplexer input;
+
+	public ScenePlay() {
+		bgImage = new Image(Engine.resource("atlas", TextureAtlas.class)
+				.findRegion("bg"));
+		box2d = new Box2dAdapter();
+		ui = new UIStage();
+		input = new InputMultiplexer();
+	}
+
+	@Override
+	public void update(float delta) {
+		Cb2World.getInstance().update(delta);
+		ui.act();
+	}
+
+	@Override
+	public void render(float delta) {
+		Engine.getSpriteBatch().begin();
+		bgImage.draw(Engine.getSpriteBatch(), 1);
+		Engine.getSpriteBatch().end();
+
+		box2d.render(delta);
+		ui.draw();
+	}
+
+	@Override
+	public void show() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void hide() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public InputProcessor getInputProcessor() {
+		input.addProcessor(ui);
+		input.addProcessor(box2d.getInputProcessor());
+		return input;
+	}
+
+}

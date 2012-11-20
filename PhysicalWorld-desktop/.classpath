@@ -6,5 +6,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/c2d"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/PhysicalWorld"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/gdx-backend-lwjgl"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/gdx-tools"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
