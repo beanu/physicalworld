@@ -31,3 +31,17 @@ button_joint
   orig: 109, 53
   offset: 0, 0
   index: -1
+tools-pause
+  rotate: false
+  xy: 802, 386
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+tools-run
+  rotate: false
+  xy: 802, 320
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1

@@ -1,15 +1,27 @@
 package com.zhaoyunhe.pw.props;
 
 import info.u250.c2d.engine.Engine;
+import info.u250.c2d.graphic.AdvanceSprite;
+import info.u250.c2d.physical.box2d.Cb2Object;
 import info.u250.c2d.physical.box2d.Cb2ObjectGroup;
+import info.u250.c2d.physical.box2d.Cb2Object.Cb2ObjectSetupCallback;
 import info.u250.c2d.physical.box2d.loader.cbt.CbtWorldReader;
 import info.u250.c2d.physical.box2d.loader.cbt.data.BodyData;
+import info.u250.c2d.physical.box2d.loader.cbt.data.BoxData;
+import info.u250.c2d.physical.box2d.loader.cbt.data.CircleData;
 import info.u250.c2d.physical.box2d.loader.cbt.data.JointData;
 
 import java.util.Iterator;
+import java.util.Random;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.zhaoyunhe.pw.IFileIO;
 import com.zhaoyunhe.pw.props.box2d.BoxHelper;
 import com.zhaoyunhe.pw.props.box2d.CircleHelper;
 import com.zhaoyunhe.pw.props.box2d.RotateHelper;
@@ -19,38 +31,41 @@ import com.zhaoyunhe.pw.props.joints.DistanceJointHelper;
 import com.zhaoyunhe.pw.props.joints.FrictionJointHelper;
 import com.zhaoyunhe.pw.props.joints.PrismaticJointHelper;
 
-public class Box2dAdapter extends ShapeGroup {
+public class Box2dAdapter extends ShapeGroup implements IFileIO {
 	final BoxHelper mBoxHelper;
 	final CircleHelper mCircleHelper;
 	final RotateHelper mRotateHelper;
 	final ScaleHelper mScaleHelper;
 	final SelectedHelper mSelectedHelper;
-	
+
 	final DistanceJointHelper mDistanceJointHelper;
 	final FrictionJointHelper mFrictionJointHelper;
-	final PrismaticJointHelper mPrismaticJointHelper; 
-	
+	final PrismaticJointHelper mPrismaticJointHelper;
+
 	public final CbtWorldReader data;
 	final Cb2ObjectGroup group;
 	final ShapeRenderer render;
 	boolean runMode = false;
+	FileHandle file;
+	final InputMultiplexer mulInput;
 
 	public Box2dAdapter() {
 		mBoxHelper = new BoxHelper(this);
-		mCircleHelper=new CircleHelper(this);
-		mRotateHelper=new RotateHelper(this);
-		mScaleHelper=new ScaleHelper(this);
-		mSelectedHelper=new SelectedHelper(this);
-		
-		mDistanceJointHelper=new DistanceJointHelper(this);
-		mFrictionJointHelper=new FrictionJointHelper(this);
-		mPrismaticJointHelper=new PrismaticJointHelper(this);
-		
+		mCircleHelper = new CircleHelper(this);
+		mRotateHelper = new RotateHelper(this);
+		mScaleHelper = new ScaleHelper(this);
+		mSelectedHelper = new SelectedHelper(this);
+
+		mDistanceJointHelper = new DistanceJointHelper(this);
+		mFrictionJointHelper = new FrictionJointHelper(this);
+		mPrismaticJointHelper = new PrismaticJointHelper(this);
+
 		data = new CbtWorldReader();
 		group = new Cb2ObjectGroup();
 		render = Engine.getShapeRenderer();
-		
-		//add to group
+
+		mulInput = new InputMultiplexer();
+		// add to group
 		this.add(mBoxHelper);
 		this.add(mCircleHelper);
 		this.add(mRotateHelper);
@@ -65,10 +80,10 @@ public class Box2dAdapter extends ShapeGroup {
 	public void render(float delta) {
 
 		if (runMode) {
-//			Engine.getSpriteBatch().begin();
-//			group.render(delta);
-//			Engine.getSpriteBatch().end();
-			// group.debug(editor.render);
+			Engine.getSpriteBatch().begin();
+			group.render(delta);
+			Engine.getSpriteBatch().end();
+			group.debug(Engine.getShapeRenderer());
 			final Iterator<JointData> it2 = data.jointDatas.iterator();
 			while (it2.hasNext()) {
 				it2.next().debug(render);
@@ -93,4 +108,84 @@ public class Box2dAdapter extends ShapeGroup {
 		return mBoxHelper.getInputProcessor();
 	}
 
+	@Override
+	public void save() {
+		try {
+			if (file == null)
+				file = Gdx.files.absolute("");// TODO
+			data.write(file);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			file = null;
+		}
+	}
+
+	@Override
+	public void read() {
+		this.data.jointDatas.clear();
+		this.data.bodyDatas.clear();
+		this.data.read(this.file);
+	}
+
+	private void build() {
+		for (BodyData body : this.data.bodyDatas) {
+			body.build();
+		}
+		for (JointData joint : this.data.jointDatas) {
+			joint.build();
+		}
+	}
+
+	public void play() {
+		this.build();
+		this.mulInput.clear();
+
+		group.clear();
+		for (BodyData bd : this.data.bodyDatas) {
+			if (bd.res == null
+					|| bd.res.trim().equals("")
+					|| Engine.resource("atlas", TextureAtlas.class).findRegion(
+							bd.res) == null) {
+				Random random = new Random();
+				if (bd instanceof CircleData) {
+					AdvanceSprite sp = new AdvanceSprite(Engine.resource(
+							"CircleTexture", Texture.class));
+					sp.setColor(random.nextFloat(), random.nextFloat(),
+							random.nextFloat(), 1);
+					group.add(new Cb2Object(bd, sp));
+				} else if (bd instanceof BoxData) {
+					AdvanceSprite sp = new AdvanceSprite(Engine.resource(
+							"BoxTexture", Texture.class));
+					sp.setColor(random.nextFloat(), random.nextFloat(),
+							random.nextFloat(), 1);
+					group.add(new Cb2Object(bd, sp));
+				}
+			} else {
+				group.add(new Cb2Object(bd, new AdvanceSprite(Engine.resource(
+						"atlas", TextureAtlas.class).findRegion(bd.res)),
+						new Cb2ObjectSetupCallback() {
+
+							@Override
+							public void before(Cb2Object obj) {
+							}
+
+							@Override
+							public void after(Cb2Object obj) {
+								obj.data.body.setSleepingAllowed(true);
+								;
+								obj.data.body.setAwake(false);
+							}
+						}));
+			}
+		}
+		runMode = true;
+	}
+
+	public void stop() {
+		group.clear();
+		data.spawn();
+		this.mulInput.clear();
+		// rbg.getCamera().position.set(Engine.getDefaultCamera().position);
+		runMode = false;
+	}
 }

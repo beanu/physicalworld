@@ -8,20 +8,21 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.zhaoyunhe.pw.IControl;
 import com.zhaoyunhe.pw.props.Box2dAdapter;
 
-public class ScenePlay implements Scene {
+public class ScenePlay implements Scene, IControl {
 
 	Image bgImage;
-	Box2dAdapter box2d;
+	Box2dAdapter box2dAdapter;
 	UIStage ui;
 	InputMultiplexer input;
 
 	public ScenePlay() {
 		bgImage = new Image(Engine.resource("atlas", TextureAtlas.class)
 				.findRegion("bg"));
-		box2d = new Box2dAdapter();
-		ui = new UIStage();
+		box2dAdapter = new Box2dAdapter();
+		ui = new UIStage(this);
 		input = new InputMultiplexer();
 	}
 
@@ -37,7 +38,7 @@ public class ScenePlay implements Scene {
 		bgImage.draw(Engine.getSpriteBatch(), 1);
 		Engine.getSpriteBatch().end();
 
-		box2d.render(delta);
+		box2dAdapter.render(delta);
 		ui.draw();
 	}
 
@@ -56,8 +57,17 @@ public class ScenePlay implements Scene {
 	@Override
 	public InputProcessor getInputProcessor() {
 		input.addProcessor(ui);
-		input.addProcessor(box2d.getInputProcessor());
+		input.addProcessor(box2dAdapter.getInputProcessor());
 		return input;
 	}
 
+	@Override
+	public void play() {
+		box2dAdapter.play();
+	}
+
+	@Override
+	public void stop() {
+		box2dAdapter.stop();
+	}
 }
