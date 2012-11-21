@@ -105,6 +105,7 @@ public class Box2dAdapter extends ShapeGroup implements IFileIO {
 
 	@Override
 	public InputProcessor getInputProcessor() {
+		mulInput.addProcessor(mScaleHelper.getInputProcessor());
 		return mulInput;
 	}
 
