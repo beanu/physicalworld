@@ -246,11 +246,13 @@ public class Box2dAdapter extends ShapeGroup implements IFileIO {
 
 	public void activeCircleHelper() {
 		this.mulInput.clear();
+		this.mulInput.addProcessor(mSelectedHelper.getInputProcessor());
 		this.mulInput.addProcessor(mCircleHelper.getInputProcessor());
 	}
 
 	public void activeBoxHelper() {
 		this.mulInput.clear();
+		this.mulInput.addProcessor(mSelectedHelper.getInputProcessor());
 		this.mulInput.addProcessor(mBoxHelper.getInputProcessor());
 	}
 }

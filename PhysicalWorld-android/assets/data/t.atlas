@@ -5,42 +5,42 @@ filter: Nearest,Nearest
 repeat: none
 bg
   rotate: false
-  xy: 0, 55
-  size: 800, 450
-  orig: 800, 450
+  xy: 0, 0
+  size: 800, 480
+  orig: 800, 480
   offset: 0, 0
   index: -1
 button_box
   rotate: false
-  xy: 0, 0
+  xy: 802, 427
   size: 109, 53
   orig: 109, 53
   offset: 0, 0
   index: -1
 button_circle
   rotate: false
-  xy: 802, 452
+  xy: 913, 427
   size: 109, 53
   orig: 109, 53
   offset: 0, 0
   index: -1
 button_joint
   rotate: false
-  xy: 913, 452
+  xy: 802, 372
   size: 109, 53
   orig: 109, 53
   offset: 0, 0
   index: -1
 tools-pause
   rotate: false
-  xy: 802, 386
+  xy: 802, 306
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 tools-run
   rotate: false
-  xy: 802, 320
+  xy: 802, 240
   size: 64, 64
   orig: 64, 64
   offset: 0, 0

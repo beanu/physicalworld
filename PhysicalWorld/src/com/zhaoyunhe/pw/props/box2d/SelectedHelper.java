@@ -50,11 +50,13 @@ public class SelectedHelper implements Shape {
 					}
 					if (shapeOn) {
 						tmp.set(Engine.screenToWorld(x, y));
+						return true;
 					} else {
 						data = null;
+						return false;
 					}
 				}
-				return true;
+				return false;
 			}
 
 			@Override
@@ -65,7 +67,7 @@ public class SelectedHelper implements Shape {
 					tmp.set(Engine.screenToWorld(x, y));
 //					Engine.getEventManager().fire(Events.UPDATE_BOXED_PANEL,data);
 				}
-				return true;
+				return false;
 			}
 
 			@Override
