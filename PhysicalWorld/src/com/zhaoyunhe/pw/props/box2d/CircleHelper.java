@@ -5,7 +5,6 @@ import info.u250.c2d.physical.box2d.loader.cbt.data.CircleData;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Color;
@@ -60,44 +59,35 @@ public class CircleHelper implements Shape {
 //						Engine.getEventManager().fire(Events.UPDATE_BOXED_PANEL, data);
 						currentPoint = 1;
 						// do start
-					} else if (1 == currentPoint) {
-						secondPoint.set(Engine.screenToWorld(x, y));
-						if (firstPoint.dst(secondPoint) > 0) {
-							data.radius = firstPoint.dst(secondPoint);
-							data.center.set(firstPoint);
-							currentPoint = -1;
-							adapter.data.bodyDatas.add(data);
-//							Engine.getEventManager().fire(Events.UPDATE_BOXED_PANEL, data);
-							data = null;
-							// do end
-						}
 					}
-				} else {
-					data = null;
 				}
 				return true;
 			}
 
 			@Override
-			public boolean mouseMoved(int x, int y) {
+			public boolean touchDragged(int screenX, int screenY, int pointer) {
 				if (1 == currentPoint) {
 					// do move
-					secondPoint.set(Engine.screenToWorld(x, y));
+					secondPoint.set(Engine.screenToWorld(screenX, screenY));
 				}
-				return super.mouseMoved(x, y);
-			}
-
-			@Override
-			public boolean keyDown(int keycode) {
-				if (keycode == Keys.ESCAPE) {
-					currentPoint = -1;
-					data = null;
-				}
-				return super.keyDown(keycode);
+				return super.touchDragged(screenX, screenY, pointer);
 			}
 
 			@Override
 			public boolean touchUp(int x, int y, int pointer, int button) {
+				if (1 == currentPoint) {
+					secondPoint.set(Engine.screenToWorld(x, y));
+					if (firstPoint.dst(secondPoint) > 0) {
+						data.radius = firstPoint.dst(secondPoint);
+						data.center.set(firstPoint);
+						
+						adapter.data.bodyDatas.add(data);
+//						Engine.getEventManager().fire(Events.UPDATE_BOXED_PANEL, data);
+						// do end
+					}
+					currentPoint = -1;
+					data = null;
+				}
 				return super.touchUp(x, y, pointer, button);
 			}
 		};

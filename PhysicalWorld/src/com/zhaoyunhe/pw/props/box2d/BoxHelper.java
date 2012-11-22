@@ -59,47 +59,20 @@ public class BoxHelper implements Shape {
 						data = new BoxData();
 //						Engine.getEventManager().fire(Events.UPDATE_BOXED_PANEL,data);
 						currentPoint = 1;
-					} else if (1 == currentPoint) {
-						secondPoint.set(Engine.screenToWorld(x, y));
-						float width =  secondPoint.x - firstPoint.x ;
-						float height = secondPoint.y - firstPoint.y ;
-						
-						data.width = Math.abs(width);
-						data.height = Math.abs(height);
-						
-						Vector2 start = new Vector2();
-						
-						if(width>0){
-							start.x = firstPoint.x ;
-						}else{
-							start.x = secondPoint.x ;
-						}
-						
-						if(height>0){
-							start.y = firstPoint.y ;
-						}else{
-							start.y = secondPoint.y ;
-						}
-						
-						data.center.set(start.cpy().add(data.width/2,data.height/2));
-						currentPoint = -1;
-						adapter.data.bodyDatas.add(data);
-//						Engine.getEventManager().fire(Events.UPDATE_BOXED_PANEL,data);
-						data = null;
-						// do end
 					}
 				}
 				return true;
 			}
-
+			
 			@Override
-			public boolean mouseMoved(int x, int y) {
+			public boolean touchDragged(int screenX, int screenY, int pointer) {
 				if (1 == currentPoint) {
 					// do move
-					secondPoint.set(Engine.screenToWorld(x, y));
+					secondPoint.set(Engine.screenToWorld(screenX, screenY));
 				}
-				return super.mouseMoved(x, y);
+				return super.touchDragged(screenX, screenY, pointer);
 			}
+
 			@Override
 			public boolean keyDown(int keycode) {
 				if(keycode == Keys.ESCAPE){
@@ -110,6 +83,36 @@ public class BoxHelper implements Shape {
 			}
 			@Override
 			public boolean touchUp(int x, int y, int pointer, int button) {
+				if(1==currentPoint){
+					secondPoint.set(Engine.screenToWorld(x, y));
+					float width =  secondPoint.x - firstPoint.x ;
+					float height = secondPoint.y - firstPoint.y ;
+					
+					data.width = Math.abs(width);
+					data.height = Math.abs(height);
+					
+					Vector2 start = new Vector2();
+					
+					if(width>0){
+						start.x = firstPoint.x ;
+					}else{
+						start.x = secondPoint.x ;
+					}
+					
+					if(height>0){
+						start.y = firstPoint.y ;
+					}else{
+						start.y = secondPoint.y ;
+					}
+					
+					data.center.set(start.cpy().add(data.width/2,data.height/2));
+					adapter.data.bodyDatas.add(data);
+//					Engine.getEventManager().fire(Events.UPDATE_BOXED_PANEL,data);
+					data = null;
+					currentPoint = -1;
+					// do end
+				}
+
 				return super.touchUp(x, y, pointer, button);
 			}
 		};

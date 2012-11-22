@@ -8,9 +8,13 @@ import info.u250.c2d.utils.UiUtils;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.zhaoyunhe.pw.IScene;
@@ -19,105 +23,128 @@ import com.zhaoyunhe.pw.scenes.ScenePlay;
 
 public class ShapePanel extends Group {
 
-	private Image boxImage;
-	private Image circleImage;
-	private Image jointImage;
-	
-	private Image tools_run;//TODO delete
-	private IScene control;//TODO delete
-	
+	private Button mButtonBox;
+	private Button mButtonCircle;
+	private Button mButtonJoint;
+
+	private Image tools_run;// TODO delete
+	private IScene control;// TODO delete
+
 	private TextureAtlas atlas;
 	private Box2dAdapter adapter;
 
 	public ShapePanel(IScene control) {
 		atlas = Engine.resource("atlas");
-		this.control=control;
-		adapter=((ScenePlay)this.control).getBox2dAdapter();
+		this.control = control;
+		adapter = ((ScenePlay) this.control).getBox2dAdapter();
 
-		boxImage = new Image(atlas.findRegion("button_box"));
-		circleImage = new Image(atlas.findRegion("button_circle"));
-		jointImage = new Image(atlas.findRegion("button_joint"));
+		mButtonBox = new Button(new TextureRegionDrawable(atlas.findRegion("button_box")));
+		mButtonCircle = new Button(new TextureRegionDrawable(atlas.findRegion("button_circle")));
+		mButtonJoint = new Button(new TextureRegionDrawable(atlas.findRegion("button_joint")));
 
 		int offset = 60;
-		jointImage.setPosition(0, 0);
-		circleImage.setPosition(0, offset);
-		boxImage.setPosition(0, offset * 2);
+		mButtonJoint.setPosition(0, 0);
+		mButtonCircle.setPosition(0, offset);
+		mButtonBox.setPosition(0, offset * 2);
 
 		setButtonListener();
-		this.addActor(boxImage);
-		this.addActor(circleImage);
-		this.addActor(jointImage);
+		this.addActor(mButtonBox);
+		this.addActor(mButtonCircle);
+		this.addActor(mButtonJoint);
 	}
 
 	private void setButtonListener() {
-		boxImage.addListener(new ClickListener() {
-
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				adapter.activeBoxHelper();
-			}
-
-		});
-
-		circleImage.addListener(new ClickListener() {
-
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				Gdx.app.log("debug", "circleImage clicked");
-				adapter.activeCircleHelper();
-			}
-
-		});
-
-		jointImage.addListener(new ClickListener() {
-
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				Gdx.app.log("debug", "jointImage clicked");
-			}
-
-		});
 		
-		//TODO delete
-		final TextureRegionDrawable pauseRegion = new TextureRegionDrawable(atlas.findRegion("tools-pause"));
-		final TextureRegionDrawable playRegion = new TextureRegionDrawable(atlas.findRegion("tools-run"));
-		tools_run = new Image(atlas.findRegion("tools-pause"));
-		tools_run.addListener(new ClickListener(){
+		mButtonBox.addListener(new ChangeListener() {
+
 			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				if(tools_run.getDrawable() == playRegion){
-					Cb2World.getInstance().dispose();
-					Cb2World.getInstance().installDefaultWorld();
-					
-					tools_run.setDrawable(pauseRegion);
-					control.play();
-					
-					InputMultiplexer mul = new InputMultiplexer();
-					mul.addProcessor(Gdx.input.getInputProcessor());
-					mul.addProcessor(new PhysicalFingerInput(Cb2World.getInstance().createScreenBox()));
-					Gdx.input.setInputProcessor(mul);
+			public void changed(ChangeEvent event, Actor actor) {
+				if(mButtonBox.isChecked()){
+					mButtonBox.addAction(Actions.moveBy(20, 0, 0.2f));
+					adapter.activeBoxHelper();
+					if(Engine.debug())Gdx.app.log("debug", mButtonBox.isChecked()+"mButtonBox click");
 				}else{
-					Cb2World.getInstance().dispose();
-					
-					tools_run.setDrawable(playRegion);
-					control.stop();
-					
-//					if(Gdx.input.getInputProcessor() instanceof InputMultiplexer){
-//						InputMultiplexer mul = InputMultiplexer.class.cast(Gdx.input.getInputProcessor());
-//						for(InputProcessor input:mul.getProcessors()){
-//							if(input instanceof PhysicalFingerInput){
-//								mul.removeProcessor(input);
-//							}
-//						}
-//					}
+					mButtonBox.addAction(Actions.moveBy(-20, 0, 0.2f));
+					adapter.activeSelectHelper();
+					if(Engine.debug())Gdx.app.log("debug", mButtonBox.isChecked()+"mButtonBox back");
 				}
 			}
 		});
-		
-		
+
+		mButtonCircle.addListener(new ChangeListener() {
+			
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				if(mButtonCircle.isChecked()){
+					mButtonCircle.addAction(Actions.moveBy(20, 0, 0.2f));
+					adapter.activeCircleHelper();
+					if(Engine.debug())Gdx.app.log("debug", "circleImage clicked");
+				}else{
+					mButtonCircle.addAction(Actions.moveBy(-20, 0, 0.2f));
+					adapter.activeSelectHelper();
+					if(Engine.debug())Gdx.app.log("debug", "circleImage back");
+				}
+				
+			}
+		});
+
+		mButtonJoint.addListener(new ChangeListener() {
+			
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				if(mButtonJoint.isChecked()){
+					mButtonJoint.addAction(Actions.moveBy(20, 0, 0.2f));
+				}else{
+					mButtonJoint.addAction(Actions.moveBy(-20, 0, 0.2f));
+				}
+				
+			}
+		});
+
+		// TODO delete
+		final TextureRegionDrawable pauseRegion = new TextureRegionDrawable(
+				atlas.findRegion("tools-pause"));
+		final TextureRegionDrawable playRegion = new TextureRegionDrawable(
+				atlas.findRegion("tools-run"));
+		tools_run = new Image(atlas.findRegion("tools-pause"));
+		tools_run.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				if (tools_run.getDrawable() == playRegion) {
+					Cb2World.getInstance().dispose();
+					Cb2World.getInstance().installDefaultWorld();
+
+					tools_run.setDrawable(pauseRegion);
+					control.play();
+
+					InputMultiplexer mul = new InputMultiplexer();
+					mul.addProcessor(Gdx.input.getInputProcessor());
+					mul.addProcessor(new PhysicalFingerInput(Cb2World
+							.getInstance().createScreenBox()));
+					Gdx.input.setInputProcessor(mul);
+				} else {
+					Cb2World.getInstance().dispose();
+
+					tools_run.setDrawable(playRegion);
+					control.stop();
+
+					// if(Gdx.input.getInputProcessor() instanceof
+					// InputMultiplexer){
+					// InputMultiplexer mul =
+					// InputMultiplexer.class.cast(Gdx.input.getInputProcessor());
+					// for(InputProcessor input:mul.getProcessors()){
+					// if(input instanceof PhysicalFingerInput){
+					// mul.removeProcessor(input);
+					// }
+					// }
+					// }
+				}
+			}
+		});
+
 		tools_run.setDrawable(playRegion);
 		UiUtils.centerActor(tools_run);
-		tools_run.setY( Engine.getEngineConfig().height - tools_run.getHeight());
+		tools_run.setY(Engine.getEngineConfig().height - tools_run.getHeight());
 		this.addActor(tools_run);
 	}
 }
