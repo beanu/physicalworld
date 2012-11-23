@@ -17,9 +17,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.zhaoyunhe.pw.IScene;
+import com.zhaoyunhe.pw.Events;
 import com.zhaoyunhe.pw.props.Box2dAdapter;
-import com.zhaoyunhe.pw.scenes.ScenePlay;
 
 public class ShapePanel extends Group {
 
@@ -28,15 +27,13 @@ public class ShapePanel extends Group {
 	private Button mButtonJoint;
 
 	private Image tools_run;// TODO delete
-	private IScene control;// TODO delete
 
 	private TextureAtlas atlas;
 	private Box2dAdapter adapter;
 
-	public ShapePanel(IScene control) {
+	public ShapePanel(Box2dAdapter adapter) {
 		atlas = Engine.resource("atlas");
-		this.control = control;
-		adapter = ((ScenePlay) this.control).getBox2dAdapter();
+		this.adapter = adapter;
 
 		mButtonBox = new Button(new TextureRegionDrawable(atlas.findRegion("button_box")));
 		mButtonCircle = new Button(new TextureRegionDrawable(atlas.findRegion("button_circle")));
@@ -60,6 +57,7 @@ public class ShapePanel extends Group {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				if(mButtonBox.isChecked()){
+					unCheckButton(mButtonBox);
 					mButtonBox.addAction(Actions.moveBy(20, 0, 0.2f));
 					adapter.activeBoxHelper();
 					if(Engine.debug())Gdx.app.log("debug", mButtonBox.isChecked()+"mButtonBox click");
@@ -76,6 +74,7 @@ public class ShapePanel extends Group {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				if(mButtonCircle.isChecked()){
+					unCheckButton(mButtonCircle);
 					mButtonCircle.addAction(Actions.moveBy(20, 0, 0.2f));
 					adapter.activeCircleHelper();
 					if(Engine.debug())Gdx.app.log("debug", "circleImage clicked");
@@ -93,9 +92,12 @@ public class ShapePanel extends Group {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				if(mButtonJoint.isChecked()){
+					unCheckButton(mButtonJoint);
 					mButtonJoint.addAction(Actions.moveBy(20, 0, 0.2f));
+					Engine.getEventManager().fire(Events.MOVE_JOINT_PANEL,true);
 				}else{
 					mButtonJoint.addAction(Actions.moveBy(-20, 0, 0.2f));
+					Engine.getEventManager().fire(Events.MOVE_JOINT_PANEL,false);
 				}
 				
 			}
@@ -115,7 +117,7 @@ public class ShapePanel extends Group {
 					Cb2World.getInstance().installDefaultWorld();
 
 					tools_run.setDrawable(pauseRegion);
-					control.play();
+					adapter.play();
 
 					InputMultiplexer mul = new InputMultiplexer();
 					mul.addProcessor(Gdx.input.getInputProcessor());
@@ -126,7 +128,7 @@ public class ShapePanel extends Group {
 					Cb2World.getInstance().dispose();
 
 					tools_run.setDrawable(playRegion);
-					control.stop();
+					adapter.stop();
 
 					// if(Gdx.input.getInputProcessor() instanceof
 					// InputMultiplexer){
@@ -146,5 +148,15 @@ public class ShapePanel extends Group {
 		UiUtils.centerActor(tools_run);
 		tools_run.setY(Engine.getEngineConfig().height - tools_run.getHeight());
 		this.addActor(tools_run);
+	}
+	
+	private void unCheckButton(Button btn) {
+		for (Actor actor : this.getChildren()) {
+			if (actor instanceof Button) {
+				if (((Button) actor).isChecked() && ((Button) actor)!= btn ) {
+					((Button) actor).setChecked(false);
+				}
+			}
+		}
 	}
 }
