@@ -3,7 +3,6 @@ package com.zhaoyunhe.pw.ui;
 import info.u250.c2d.engine.Engine;
 import info.u250.c2d.input.PhysicalFingerInput;
 import info.u250.c2d.physical.box2d.Cb2World;
-import info.u250.c2d.utils.UiUtils;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
@@ -48,6 +47,8 @@ public class ShapePanel extends Group {
 		this.addActor(mButtonBox);
 		this.addActor(mButtonCircle);
 		this.addActor(mButtonJoint);
+		
+		this.setHeight(offset*4);
 	}
 
 	private void setButtonListener() {
@@ -145,8 +146,9 @@ public class ShapePanel extends Group {
 		});
 
 		tools_run.setDrawable(playRegion);
-		UiUtils.centerActor(tools_run);
-		tools_run.setY(Engine.getEngineConfig().height - tools_run.getHeight());
+//		UiUtils.centerActor(tools_run);
+		tools_run.setX(0);
+		tools_run.setY(180);
 		this.addActor(tools_run);
 	}
 	

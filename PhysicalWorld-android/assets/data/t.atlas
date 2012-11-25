@@ -5,64 +5,78 @@ filter: Nearest,Nearest
 repeat: none
 bg
   rotate: false
-  xy: 0, 0
+  xy: 0, 518
   size: 800, 480
   orig: 800, 480
   offset: 0, 0
   index: -1
 joint-panel
   rotate: false
-  xy: 802, 0
+  xy: 0, 36
   size: 100, 480
   orig: 100, 480
   offset: 0, 0
   index: -1
+board
+  rotate: false
+  xy: 802, 884
+  size: 121, 114
+  orig: 121, 114
+  offset: 0, 0
+  index: -1
 button_box
   rotate: false
-  xy: 904, 427
+  xy: 102, 463
   size: 109, 53
   orig: 109, 53
   offset: 0, 0
   index: -1
 button_circle
   rotate: false
-  xy: 904, 372
+  xy: 802, 829
   size: 109, 53
   orig: 109, 53
   offset: 0, 0
   index: -1
 button_joint
   rotate: false
-  xy: 904, 317
+  xy: 102, 408
   size: 109, 53
   orig: 109, 53
   offset: 0, 0
   index: -1
 tools-pause
   rotate: false
-  xy: 904, 251
+  xy: 925, 934
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 tools-run
   rotate: false
-  xy: 904, 185
+  xy: 213, 452
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 joint-1-down
   rotate: false
-  xy: 904, 149
+  xy: 0, 0
   size: 84, 34
   orig: 84, 34
   offset: 0, 0
   index: -1
 joint-1
   rotate: false
-  xy: 904, 113
+  xy: 802, 793
   size: 84, 34
   orig: 84, 34
+  offset: 0, 0
+  index: -1
+cursor
+  rotate: false
+  xy: 102, 386
+  size: 20, 20
+  orig: 20, 20
   offset: 0, 0
   index: -1

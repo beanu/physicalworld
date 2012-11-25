@@ -18,7 +18,7 @@ public class UIStage extends C2dStage {
 
 	public UIStage(Box2dAdapter adapter) {
 		shapePanel = new ShapePanel(adapter);
-		shapePanel.setPosition(0, 10);
+		shapePanel.setPosition(0, Engine.getEngineConfig().height-shapePanel.getHeight());
 		
 		jointPanel=new JointPanel(adapter);
 		jointPanel.setPosition(Engine.getEngineConfig().width, 0);
