@@ -38,7 +38,6 @@ public class PropertiesPanel extends Group {
 		private Image cursor;
 		
 		private Vector2 vector=new Vector2();
-		private boolean tempChange;
 		private Image touchedImage;
 		
 		public PropertyBoard(TextureRegion bgRegion,TextureRegion cursorRegion) {
@@ -49,7 +48,7 @@ public class PropertiesPanel extends Group {
 				@Override
 				public boolean touchDown(InputEvent event, float x, float y,int pointer, int button) {
 					Actor actor=hit(x, y, true);
-					if(actor!=null && actor instanceof Image){
+					if(actor!=null && actor instanceof Image && actor==cursor){
 						touchedImage=(Image)actor;
 					}
 					return true;
@@ -63,36 +62,23 @@ public class PropertiesPanel extends Group {
 				@Override
 				public void touchDragged(InputEvent event, float x, float y,int pointer) {
 					if(touchedImage!=null){
-						Gdx.app.debug("debug", "x:"+x+" y:"+y);
-						touchedImage.setPosition(x, y);
+						if(x>=0 && y>=0){
+							if(x<getWidth() && y<getHeight()){
+								Gdx.app.debug("debug", "x:"+x+" y:"+y);
+								touchedImage.setPosition(x-touchedImage.getWidth()/2, y-touchedImage.getHeight()/2);
+							}
+							if(x>=getWidth() && y<getHeight()){
+								touchedImage.setPosition(getWidth()-touchedImage.getWidth()/2, y-touchedImage.getHeight()/2);
+							}
+							if(x<getWidth() && y>=getHeight()){
+								touchedImage.setPosition(x-touchedImage.getWidth()/2, getHeight()-touchedImage.getHeight()/2);
+							}
+						}
 					}
 				}
 				
 			});
-			
-			this.cursor.addListener(new InputListener() {
-
-				@Override
-				public boolean touchDown(InputEvent event, float x, float y,int pointer, int button) {
-					tempChange=true;
-					return true;
-				}
-
-				@Override
-				public void touchUp(InputEvent event, float x, float y,int pointer, int button) {
-					tempChange=false;
-				}
-
-				@Override
-				public void touchDragged(InputEvent event, float x, float y,int pointer) {
-					if(tempChange){
-						
-						vector.set(x, y);
-						cursor.setPosition(x, y);
-					}
-				}
-
-			});
+		
 
 			this.addActor(bg);
 			this.addActor(cursor);
