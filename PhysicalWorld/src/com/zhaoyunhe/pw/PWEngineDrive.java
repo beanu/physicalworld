@@ -12,7 +12,6 @@ public class PWEngineDrive implements EngineDrive {
 	public EngineOptions onSetupEngine() {
 		final EngineOptions opt = new EngineOptions(new String[] {"data/"}, 800, 480);
 		opt.autoResume = true;
-		opt.debug=true;
 		return opt;
 	}
 

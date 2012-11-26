@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -14,14 +16,14 @@ import com.zhaoyunhe.pw.props.Box2dAdapter;
 
 public class JointPanel extends Table {
 
-	private Button mButtonDistanceJoint;
-	private Button mButtonFrictionJoint;
-	private Button mButtonPrismaticJoint;
-	private Button mButtonPulleyJoint;
-	private Button mButtonRevoluteJoint;
-	private Button mButtonRopeJoint;
-	private Button mButtonWeldJoint;
-	private Button mButtonWheelJoint;
+	private TextButton mButtonDistanceJoint;
+	private TextButton mButtonFrictionJoint;
+	private TextButton mButtonPrismaticJoint;
+	private TextButton mButtonPulleyJoint;
+	private TextButton mButtonRevoluteJoint;
+	private TextButton mButtonRopeJoint;
+	private TextButton mButtonWeldJoint;
+	private TextButton mButtonWheelJoint;
 
 	private TextureAtlas atlas;
 	private Box2dAdapter adapter;
@@ -33,14 +35,18 @@ public class JointPanel extends Table {
 		this.setBackground(new TextureRegionDrawable(atlas.findRegion("joint-panel")));
 		Drawable up = new TextureRegionDrawable(atlas.findRegion("joint-1"));
 		Drawable down = new TextureRegionDrawable(atlas.findRegion("joint-1-down"));
-		mButtonDistanceJoint = new Button(up, down, down);
-		mButtonFrictionJoint = new Button(up, down, down);
-		mButtonPrismaticJoint = new Button(up, down, down);
-		mButtonPulleyJoint = new Button(up, down, down);
-		mButtonRevoluteJoint = new Button(up, down, down);
-		mButtonRopeJoint = new Button(up, down, down);
-		mButtonWeldJoint = new Button(up, down, down);
-		mButtonWheelJoint = new Button(up, down, down);
+		TextButtonStyle style=new TextButtonStyle();
+		style.up=up;style.down=down;style.checked=down;
+		style.font=Engine.getDefaultFont();
+		
+		mButtonDistanceJoint = new TextButton("DistanceJoint",style);
+		mButtonFrictionJoint = new TextButton("FrictionJoint",style);
+		mButtonPrismaticJoint = new TextButton("PrismaticJoint",style);
+		mButtonPulleyJoint = new TextButton("PulleyJoint",style);
+		mButtonRevoluteJoint = new TextButton("RevoluteJoint",style);
+		mButtonRopeJoint = new TextButton("RopeJoint",style);
+		mButtonWeldJoint = new TextButton("WeldJoint",style);
+		mButtonWheelJoint = new TextButton("WheelJoint",style);
 
 		setButtonListener();
 		this.row().spaceBottom(20);

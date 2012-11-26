@@ -61,11 +61,11 @@ public class ShapePanel extends Group {
 					unCheckButton(mButtonBox);
 					mButtonBox.addAction(Actions.moveBy(20, 0, 0.2f));
 					adapter.activeBoxHelper();
-					if(Engine.debug())Gdx.app.log("debug", mButtonBox.isChecked()+"mButtonBox click");
+					Gdx.app.debug("debug", mButtonBox.isChecked()+"mButtonBox click");
 				}else{
 					mButtonBox.addAction(Actions.moveBy(-20, 0, 0.2f));
 					adapter.activeSelectHelper();
-					if(Engine.debug())Gdx.app.log("debug", mButtonBox.isChecked()+"mButtonBox back");
+					Gdx.app.debug("debug", mButtonBox.isChecked()+"mButtonBox back");
 				}
 			}
 		});
@@ -78,11 +78,11 @@ public class ShapePanel extends Group {
 					unCheckButton(mButtonCircle);
 					mButtonCircle.addAction(Actions.moveBy(20, 0, 0.2f));
 					adapter.activeCircleHelper();
-					if(Engine.debug())Gdx.app.log("debug", "circleImage clicked");
+					Gdx.app.debug("debug", "circleImage clicked");
 				}else{
 					mButtonCircle.addAction(Actions.moveBy(-20, 0, 0.2f));
 					adapter.activeSelectHelper();
-					if(Engine.debug())Gdx.app.log("debug", "circleImage back");
+					Gdx.app.debug("debug", "circleImage back");
 				}
 				
 			}

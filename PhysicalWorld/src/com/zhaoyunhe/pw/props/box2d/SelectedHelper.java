@@ -10,6 +10,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.zhaoyunhe.pw.Events;
 import com.zhaoyunhe.pw.props.Box2dAdapter;
 import com.zhaoyunhe.pw.props.Shape;
 
@@ -18,6 +19,7 @@ public class SelectedHelper implements Shape {
 
 	Box2dAdapter adapter;
 	BodyData data;
+	boolean showProperty;
 
 	public SelectedHelper(Box2dAdapter adapter) {
 		render = Engine.getShapeRenderer();
@@ -43,15 +45,19 @@ public class SelectedHelper implements Shape {
 					for (BodyData d : adapter.data.bodyDatas) {
 						if (d.isFocus(Engine.screenToWorld(x, y))) {
 							data = d;
-//							Engine.getEventManager().fire(Events.UPDATE_BOXED_PANEL, data);
 							shapeOn = true;
 							break;
 						}
 					}
 					if (shapeOn) {
 						tmp.set(Engine.screenToWorld(x, y));
+						showProperty=true;
 						return true;
 					} else {
+						if(showProperty){
+							Engine.getEventManager().fire(Events.MOVE_PROPERTIES_PANEL, false);
+						}
+						showProperty=false;
 						data = null;
 						return false;
 					}
@@ -65,14 +71,17 @@ public class SelectedHelper implements Shape {
 					Vector2 offset = Engine.screenToWorld(x, y).sub(tmp);
 					data.translate(offset.x, offset.y);
 					tmp.set(Engine.screenToWorld(x, y));
-//					Engine.getEventManager().fire(Events.UPDATE_BOXED_PANEL,data);
+					showProperty=false;
 				}
 				return false;
 			}
 
 			@Override
 			public boolean touchUp(int x, int y, int pointer, int button) {
-				data = null;
+				//TODO data = null;
+				if(showProperty){
+					Engine.getEventManager().fire(Events.MOVE_PROPERTIES_PANEL, true);
+				}
 				return super.touchUp(x, y, pointer, button);
 			}
 		};

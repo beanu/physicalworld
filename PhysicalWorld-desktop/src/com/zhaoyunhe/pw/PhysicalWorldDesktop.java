@@ -14,8 +14,8 @@ public class PhysicalWorldDesktop {
 		cfg.useGL20 = false;
 		cfg.width = 800;
 		cfg.height = 480;
-
-		new LwjglApplication(new PhysicalWorld(), cfg);
+		
+		new LwjglApplication(new PhysicalWorld(), cfg).setLogLevel(LwjglApplication.LOG_DEBUG);
 
 	}
 
