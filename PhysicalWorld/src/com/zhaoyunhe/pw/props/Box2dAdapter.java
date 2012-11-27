@@ -3,6 +3,7 @@ package com.zhaoyunhe.pw.props;
 import info.u250.c2d.engine.Engine;
 import info.u250.c2d.graphic.AdvanceSprite;
 import info.u250.c2d.physical.box2d.Cb2Object;
+import info.u250.c2d.physical.box2d.Cb2World;
 import info.u250.c2d.physical.box2d.Cb2Object.Cb2ObjectSetupCallback;
 import info.u250.c2d.physical.box2d.Cb2ObjectGroup;
 import info.u250.c2d.physical.box2d.loader.cbt.CbtWorldReader;
@@ -20,7 +21,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.zhaoyunhe.pw.IFileIO;
 import com.zhaoyunhe.pw.props.box2d.BoxHelper;
 import com.zhaoyunhe.pw.props.box2d.CircleHelper;
@@ -56,7 +57,7 @@ public class Box2dAdapter extends ShapeGroup implements IFileIO {
 
 	public final CbtWorldReader data;
 	final Cb2ObjectGroup group;
-	final ShapeRenderer render;
+	final Box2DDebugRenderer box2dRender;
 	boolean runMode = false;
 	FileHandle file;
 	final InputMultiplexer mulInput;
@@ -80,7 +81,7 @@ public class Box2dAdapter extends ShapeGroup implements IFileIO {
 
 		data = new CbtWorldReader();
 		group = new Cb2ObjectGroup();
-		render = Engine.getShapeRenderer();
+		box2dRender = new Box2DDebugRenderer(true, true, true, true, false);
 
 		mulInput = new InputMultiplexer();
 		// add to group
@@ -107,19 +108,20 @@ public class Box2dAdapter extends ShapeGroup implements IFileIO {
 			Engine.getSpriteBatch().begin();
 			group.render(delta);
 			Engine.getSpriteBatch().end();
-			group.debug(Engine.getShapeRenderer());
-			final Iterator<JointData> it2 = data.jointDatas.iterator();
-			while (it2.hasNext()) {
-				it2.next().debug(render);
-			}
+//			group.debug(Engine.getShapeRenderer());
+//			final Iterator<JointData> it2 = data.jointDatas.iterator();
+//			while (it2.hasNext()) {
+//				it2.next().debug(render);
+//			}
+			box2dRender.render(Cb2World.getInstance().world(), Engine.getDefaultCamera().combined.scl(Cb2World.RADIO));
 		} else {
 			final Iterator<BodyData> it = data.bodyDatas.iterator();
 			while (it.hasNext()) {
-				it.next().debug(render);
+				it.next().debug(Engine.getShapeRenderer());
 			}
 			final Iterator<JointData> it2 = data.jointDatas.iterator();
 			while (it2.hasNext()) {
-				it2.next().debug(render);
+				it2.next().debug(Engine.getShapeRenderer());
 			}
 		}
 		super.render(delta);
