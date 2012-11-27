@@ -33,16 +33,21 @@ public class PropertiesPanel extends Group {
 		this.setHeight(densityAndRadius.getHeight());
 	}
 
-	static class PropertyBoard extends Group {
+	public static class PropertyBoard extends Group {
+		private Vector2 vector=new Vector2();
+		private String nameX;
+		private String nameY;
+		
 		private Image bg;
 		private Image cursor;
-		
-		private Vector2 vector=new Vector2();
 		private Image touchedImage;
 		
-		public PropertyBoard(TextureRegion bgRegion,TextureRegion cursorRegion) {
+		public PropertyBoard(TextureRegion bgRegion,TextureRegion cursorRegion,String namex,String namey) {
 			this.bg = new Image(bgRegion);
 			this.cursor = new Image(cursorRegion);
+			this.nameX=namex;
+			this.nameY=namey;
+			
 			this.addListener(new InputListener(){
 
 				@Override
