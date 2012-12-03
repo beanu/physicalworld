@@ -70,7 +70,9 @@ public class SelectedHelper implements Shape {
 					Vector2 offset = Engine.screenToWorld(x, y).sub(tmp);
 					data.translate(offset.x, offset.y);
 					tmp.set(Engine.screenToWorld(x, y));
-					showProperty = false;
+					if(offset.len2()!=0){
+						showProperty = false;
+					}
 				}
 				return false;
 			}

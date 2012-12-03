@@ -16,11 +16,15 @@ public class MainActivity extends AndroidApplication {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		this.setLogLevel(LOG_DEBUG);//TODO
+		
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON, WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		ApplicationListener gameView = new PhysicalWorld();
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
 		config.useGL20 = false;
 		config.numSamples = 2;
+		config.useAccelerometer=false;
+		config.useCompass=false;
 		initialize(gameView, config);
 
 		DisplayMetrics mDisplayMetrics = new DisplayMetrics();

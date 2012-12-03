@@ -73,15 +73,15 @@ public abstract class BodyProperties extends EditorProperties{
 //		this.add(this.userData).colspan(3).fillX();
 //		this.row();
 		
-		this.row();
+		this.row().spaceBottom(20);
 		this.add(new Label("density", labelStyle));
-		this.add(this.density);
+		this.add(this.density).spaceRight(20);
 		this.add(new Label("friction", labelStyle));
 		this.add(this.friction);
-		this.row();
+		this.row().spaceBottom(20);
 		this.add(new Label("restitution", labelStyle));
 		this.add(this.restitution);
-		this.row();
+		this.row().spaceBottom(20);
 		
 //		this.add(new Label("sensor", labelStyle));
 //		this.add(this.sensor);
