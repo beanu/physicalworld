@@ -1,9 +1,5 @@
 package com.zhaoyunhe.pw.props.properties;
 
-import info.u250.c2d.physical.box2d.loader.cbt.data.FrictionJointData;
-
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 
 public class FrictionJointProperties extends JointProperties{
 //	final TextField localAnchorX,localAnchorY,

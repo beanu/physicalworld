@@ -56,6 +56,7 @@ public class PropertiesPanel extends Group {
 		pulleyJointProperties = new PulleyJointProperties();
 
 		this.addActor(boxBodyProperties);
+		this.setSize(boxBodyProperties.getWidth(), boxBodyProperties.getHeight());
 
 		Engine.getEventManager().register(Events.UPDATE_PROPERTY_PANEL,
 				new EventListener() {

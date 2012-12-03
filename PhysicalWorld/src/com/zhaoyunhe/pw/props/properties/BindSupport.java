@@ -4,7 +4,9 @@ import java.lang.reflect.Field;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
+import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -35,6 +37,8 @@ public class BindSupport {
 				TextField.class.cast(inputField).setText(field.get(obj)+"");
 			}else if(inputField instanceof CheckBox){
 				CheckBox.class.cast(inputField).setChecked(Boolean.parseBoolean(field.get(obj)+""));
+			}else if(inputField instanceof Slider){
+				Slider.class.cast(inputField).setValue(Float.parseFloat(field.get(obj)+""));
 			}
 			
 		}catch(Exception ex){ex.printStackTrace();}
@@ -68,6 +72,26 @@ public class BindSupport {
 //						e.printStackTrace();
 					}
 				}
+			});
+		}else if(inputField instanceof Slider){
+			Slider.class.cast(inputField).addListener(new InputListener(){
+
+				@Override
+				public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+					return true;
+				}
+
+				@Override
+				public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+					try {
+						field.set(obj, Slider.class.cast(inputField).getValue());
+					} catch (IllegalArgumentException e) {
+						e.printStackTrace();
+					} catch (IllegalAccessException e) {
+						e.printStackTrace();
+					}
+				}
+				
 			});
 		}
 		this.update(object);

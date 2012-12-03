@@ -1,8 +1,5 @@
 package com.zhaoyunhe.pw.props.properties;
 
-import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 
 public abstract class JointProperties extends EditorProperties{
 //	final CheckBox collideConnected;

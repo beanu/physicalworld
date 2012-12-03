@@ -77,6 +77,8 @@ slider_bg
   rotate: false
   xy: 102, 420
   size: 104, 10
+  split: 5, 5, 1, 1
+  pad: 5, 5, 0, 0
   orig: 104, 10
   offset: 0, 0
   index: -1

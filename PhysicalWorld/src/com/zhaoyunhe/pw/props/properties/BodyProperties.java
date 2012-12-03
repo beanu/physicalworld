@@ -3,11 +3,13 @@ package com.zhaoyunhe.pw.props.properties;
 import info.u250.c2d.engine.Engine;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider.SliderStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 public abstract class BodyProperties extends EditorProperties{
@@ -33,14 +35,15 @@ public abstract class BodyProperties extends EditorProperties{
 //		userData = new TextField("", skin);
 		TextureAtlas atlas=Engine.resource("atlas");
 		SliderStyle style=new SliderStyle();
-		style.background=new TextureRegionDrawable(atlas.findRegion("slider_bg"));
+//		style.background=new TextureRegionDrawable(atlas.findRegion("slider_bg"));
+		style.background=new NinePatchDrawable(new NinePatch(atlas.findRegion("slider_bg")));
 		style.knob=new TextureRegionDrawable(atlas.findRegion("slider_knob"));
 		
 		LabelStyle labelStyle=new LabelStyle(Engine.getDefaultFont(), new Color(1, 1, 1, 1));
 		
-		density=new Slider(0, 100, 1, false, style);
-		friction = new Slider(0, 100, 1, false, style);
-		restitution = new Slider(0, 100, 1, false, style);
+		density=new Slider(0, 1, 0.01f, false, style);
+		friction = new Slider(0, 1, 0.01f, false, style);
+		restitution = new Slider(0, 1, 0.01f, false, style);
 //		filter_categoryBits = new TextField("", skin) ;
 //		filter_groupIndex = new TextField("", skin) ;
 //		filter_maskBits = new TextField("",  skin) ;
@@ -72,12 +75,12 @@ public abstract class BodyProperties extends EditorProperties{
 		
 		this.row();
 		this.add(new Label("density", labelStyle));
-		this.add(this.density).width(40);
+		this.add(this.density);
 		this.add(new Label("friction", labelStyle));
-		this.add(this.friction).width(40);
+		this.add(this.friction);
 		this.row();
 		this.add(new Label("restitution", labelStyle));
-		this.add(this.restitution).width(40);
+		this.add(this.restitution);
 		this.row();
 		
 //		this.add(new Label("sensor", labelStyle));

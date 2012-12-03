@@ -20,6 +20,7 @@ public class SelectedHelper implements Shape {
 	Box2dAdapter adapter;
 	BodyData data;
 	boolean showProperty;
+	boolean hasShowed;
 
 	public SelectedHelper(Box2dAdapter adapter) {
 		render = Engine.getShapeRenderer();
@@ -50,14 +51,12 @@ public class SelectedHelper implements Shape {
 						}
 					}
 					if (shapeOn) {
+						Engine.getEventManager().fire(Events.UPDATE_PROPERTY_PANEL, data);
 						tmp.set(Engine.screenToWorld(x, y));
-						showProperty=true;
+						showProperty = true;
 						return true;
 					} else {
-						if(showProperty){
-							Engine.getEventManager().fire(Events.MOVE_PROPERTIES_PANEL, false);
-						}
-						showProperty=false;
+						showProperty = false;
 						data = null;
 						return false;
 					}
@@ -71,17 +70,27 @@ public class SelectedHelper implements Shape {
 					Vector2 offset = Engine.screenToWorld(x, y).sub(tmp);
 					data.translate(offset.x, offset.y);
 					tmp.set(Engine.screenToWorld(x, y));
-					showProperty=false;
+					showProperty = false;
 				}
 				return false;
 			}
 
 			@Override
 			public boolean touchUp(int x, int y, int pointer, int button) {
-				//TODO data = null;
-				if(showProperty){
-					Engine.getEventManager().fire(Events.MOVE_PROPERTIES_PANEL, true);
+				// TODO data = null;
+				if (showProperty) {
+					if (!hasShowed) {
+						Engine.getEventManager().fire(Events.MOVE_PROPERTIES_PANEL, true);
+						hasShowed = true;
+					}
+
+				} else {
+					if (hasShowed) {
+						Engine.getEventManager().fire(Events.MOVE_PROPERTIES_PANEL, false);
+						hasShowed = false;
+					}
 				}
+
 				return super.touchUp(x, y, pointer, button);
 			}
 		};
