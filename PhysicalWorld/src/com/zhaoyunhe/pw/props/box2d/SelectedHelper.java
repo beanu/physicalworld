@@ -20,7 +20,7 @@ public class SelectedHelper implements Shape {
 	Box2dAdapter adapter;
 	BodyData data;
 	boolean showProperty;
-	boolean hasShowed;
+//	boolean hasShowed;
 
 	public SelectedHelper(Box2dAdapter adapter) {
 		render = Engine.getShapeRenderer();
@@ -81,16 +81,9 @@ public class SelectedHelper implements Shape {
 			public boolean touchUp(int x, int y, int pointer, int button) {
 				// TODO data = null;
 				if (showProperty) {
-					if (!hasShowed) {
-						Engine.getEventManager().fire(Events.MOVE_PROPERTIES_PANEL, true);
-						hasShowed = true;
-					}
-
+					Engine.getEventManager().fire(Events.MOVE_PROPERTIES_PANEL, true);
 				} else {
-					if (hasShowed) {
-						Engine.getEventManager().fire(Events.MOVE_PROPERTIES_PANEL, false);
-						hasShowed = false;
-					}
+					Engine.getEventManager().fire(Events.MOVE_PROPERTIES_PANEL, false);
 				}
 
 				return super.touchUp(x, y, pointer, button);

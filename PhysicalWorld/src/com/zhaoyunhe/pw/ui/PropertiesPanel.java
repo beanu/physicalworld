@@ -41,6 +41,7 @@ public class PropertiesPanel extends Group {
 	final PulleyJointProperties pulleyJointProperties;
 
 	Object obejct_current = null;
+	boolean hasShowed;
 
 	public PropertiesPanel() {
 		// atlas = Engine.resource("atlas");
@@ -110,6 +111,15 @@ public class PropertiesPanel extends Group {
 					}
 				});
 	}
+
+	public boolean hasShowed() {
+		return hasShowed;
+	}
+
+	public void setShowed(boolean hasShowed) {
+		this.hasShowed = hasShowed;
+	}
+
 
 	// public static class PropertyBoard extends Group {
 	// private Vector2 vector=new Vector2();

@@ -51,9 +51,15 @@ public class UIStage extends C2dStage {
 			public void onEvent(Event event) {
 				boolean show=(Boolean) event.getSource();
 				if(show){
-					propertiesPanel.addAction(Actions.moveBy(0, propertiesPanel.getHeight(), 0.2f));
+					if(!propertiesPanel.hasShowed()){
+						propertiesPanel.addAction(Actions.moveBy(0, propertiesPanel.getHeight(), 0.2f));
+						propertiesPanel.setShowed(true);
+					}
 				}else{
-					propertiesPanel.addAction(Actions.moveBy(0, -propertiesPanel.getHeight(), 0.2f));
+					if(propertiesPanel.hasShowed()){
+						propertiesPanel.addAction(Actions.moveBy(0, -propertiesPanel.getHeight(), 0.2f));
+						propertiesPanel.setShowed(false);
+					}
 				}
 			}
 		});

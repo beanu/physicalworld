@@ -263,6 +263,7 @@ public class Box2dAdapter extends ShapeGroup implements IFileIO {
 
 	public void activeDistanceJointHelper() {
 		this.mulInput.clear();
+		this.mulInput.addProcessor(mJointSelectedHelper.getInputProcessor());
 		this.mulInput.addProcessor(mDistanceJointHelper.getInputProcessor());
 	}
 

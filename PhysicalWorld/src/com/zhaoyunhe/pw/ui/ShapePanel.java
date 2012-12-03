@@ -114,6 +114,7 @@ public class ShapePanel extends Group {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				if (tools_run.getDrawable() == playRegion) {
+					Engine.getEventManager().fire(Events.MOVE_PROPERTIES_PANEL, false);
 					Cb2World.getInstance().dispose();
 					Cb2World.getInstance().installDefaultWorld();
 

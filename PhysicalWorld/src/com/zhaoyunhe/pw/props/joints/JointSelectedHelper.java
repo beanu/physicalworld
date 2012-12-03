@@ -114,11 +114,13 @@ public class JointSelectedHelper implements Shape {
 					}
 					if(shapeOn){
 						tmp.set(Engine.screenToWorld(x, y));
+						return true;
 					}else{
 						data = null;
+						return false;
 					}
 				}
-				return true;
+				return false;
 			}
 			@Override
 			public boolean touchDragged(int x, int y, int pointer) {
@@ -129,7 +131,7 @@ public class JointSelectedHelper implements Shape {
 					tmp.set(Engine.screenToWorld(x, y));
 //					Engine.getEventManager().fire(Events.UPDATE_BOXED_PANEL,data);
 				}
-				return true;
+				return false;
 			}
 			
 
