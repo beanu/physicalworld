@@ -71,42 +71,52 @@ public class PropertiesPanel extends Group {
 							clear();
 							addActor(boxBodyProperties);
 							boxBodyProperties.update(data);
+							setSize(boxBodyProperties.getWidth(), boxBodyProperties.getHeight());
 						} else if (data instanceof CircleData) {
 							clear();
 							addActor(circleBodyProperties);
 							circleBodyProperties.update(data);
+							setSize(circleBodyProperties.getWidth(), circleBodyProperties.getHeight());
 						} else if (data instanceof DistanceJointData) {
 							clear();
 							addActor(distanceJointProperties);
 							distanceJointProperties.update(data);
+							setSize(distanceJointProperties.getWidth(), distanceJointProperties.getHeight());
 						} else if (data instanceof RevoluteJointData) {
 							clear();
 							addActor(revoluteJointProperties);
 							revoluteJointProperties.update(data);
+							setSize(revoluteJointProperties.getWidth(), revoluteJointProperties.getHeight());
 						} else if (data instanceof PrismaticJointData) {
 							clear();
 							addActor(prismaticJointProperties);
 							prismaticJointProperties.update(data);
+							setSize(prismaticJointProperties.getWidth(), prismaticJointProperties.getHeight());
 						} else if (data instanceof RopeJointData) {
 							clear();
 							addActor(ropeJointProperties);
 							ropeJointProperties.update(data);
+							setSize(ropeJointProperties.getWidth(), ropeJointProperties.getHeight());
 						} else if (data instanceof WeldJointData) {
 							clear();
 							addActor(weldJointProperties);
 							weldJointProperties.update(data);
+							setSize(weldJointProperties.getWidth(), weldJointProperties.getHeight());
 						} else if (data instanceof FrictionJointData) {
 							clear();
 							addActor(frictionJointProperties);
 							frictionJointProperties.update(data);
+							setSize(frictionJointProperties.getWidth(), frictionJointProperties.getHeight());
 						} else if (data instanceof WheelJointData) {
 							clear();
 							addActor(wheelJointProperties);
 							wheelJointProperties.update(data);
+							setSize(wheelJointProperties.getWidth(), wheelJointProperties.getHeight());
 						} else if (data instanceof PulleyJointData) {
 							clear();
 							addActor(pulleyJointProperties);
 							pulleyJointProperties.update(data);
+							setSize(pulleyJointProperties.getWidth(), pulleyJointProperties.getHeight());
 						}
 					}
 				});
