@@ -82,6 +82,20 @@ slider_bg
   orig: 104, 10
   offset: 0, 0
   index: -1
+toggle_off
+  rotate: false
+  xy: 925, 933
+  size: 53, 23
+  orig: 53, 23
+  offset: 0, 0
+  index: -1
+toggle_on
+  rotate: false
+  xy: 213, 451
+  size: 53, 23
+  orig: 53, 23
+  offset: 0, 0
+  index: -1
 slider_knob
   rotate: false
   xy: 0, 0
@@ -91,7 +105,7 @@ slider_knob
   index: -1
 cursor
   rotate: false
-  xy: 925, 936
+  xy: 991, 1002
   size: 20, 20
   orig: 20, 20
   offset: 0, 0

@@ -20,6 +20,7 @@ import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
+import com.zhaoyunhe.pw.Events;
 import com.zhaoyunhe.pw.props.Box2dAdapter;
 import com.zhaoyunhe.pw.props.Shape;
 
@@ -29,6 +30,7 @@ public class JointSelectedHelper implements Shape {
 	Box2dAdapter adapter;
 	JointData data;
 	Vector2 snapPoint,supportPoint;
+	boolean showProperty;
 
 	public JointSelectedHelper(Box2dAdapter adapter) {
 		render = Engine.getShapeRenderer();
@@ -107,16 +109,18 @@ public class JointSelectedHelper implements Shape {
 								snapPoint = tmpd.bodyA.center.cpy().add(tmpd.localAnchorA);
 							}
 							
-//							Engine.getEventManager().fire(Events.UPDATE_BOXED_PANEL,data);
+							Engine.getEventManager().fire(Events.UPDATE_PROPERTY_PANEL,data);
 							shapeOn = true;
 							break;
 						}
 					}
 					if(shapeOn){
 						tmp.set(Engine.screenToWorld(x, y));
+						showProperty = true;
 						return true;
 					}else{
 						data = null;
+						showProperty = false;
 						return false;
 					}
 				}
@@ -130,6 +134,9 @@ public class JointSelectedHelper implements Shape {
 					supportPoint.add(offset.x,offset.y );
 					tmp.set(Engine.screenToWorld(x, y));
 //					Engine.getEventManager().fire(Events.UPDATE_BOXED_PANEL,data);
+					if(offset.len2()!=0){
+						showProperty = false;
+					}
 				}
 				return false;
 			}
@@ -140,6 +147,11 @@ public class JointSelectedHelper implements Shape {
 				data = null;
 				snapPoint = null;
 				supportPoint = null;
+				if (showProperty) {
+					Engine.getEventManager().fire(Events.MOVE_PROPERTIES_PANEL, true);
+				} else {
+					Engine.getEventManager().fire(Events.MOVE_PROPERTIES_PANEL, false);
+				}
 				return super.touchUp(x, y, pointer, button);
 			}
 		};

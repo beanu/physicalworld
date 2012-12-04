@@ -223,48 +223,56 @@ public class Box2dAdapter extends ShapeGroup implements IFileIO {
 
 	public void activeFrictionJointHelper() {
 		this.mulInput.clear();
+		this.mulInput.addProcessor(mJointSelectedHelper.getInputProcessor());
 		this.mulInput.addProcessor(mFrictionJointHelper.getInputProcessor());
 	}
 
 	public void activePulleyJointHelper() {
 		this.mulInput.clear();
+		this.mulInput.addProcessor(mJointSelectedHelper.getInputProcessor());
 		this.mulInput.addProcessor(mPulleyJointHelper.getInputProcessor());
 	}
 
 	public void activeWheelJointHelper() {
 		this.mulInput.clear();
+		this.mulInput.addProcessor(mJointSelectedHelper.getInputProcessor());
 		this.mulInput.addProcessor(mWheelJointHelper.getInputProcessor());
 	}
 
 	public void activeRopeJointHelper() {
 		this.mulInput.clear();
+		this.mulInput.addProcessor(mJointSelectedHelper.getInputProcessor());
 		this.mulInput.addProcessor(mRopeJointHelper.getInputProcessor());
 	}
 
 	public void activePrismaticJointHelper() {
 		this.mulInput.clear();
+		this.mulInput.addProcessor(mJointSelectedHelper.getInputProcessor());
 		this.mulInput.addProcessor(mPrismaticJointHelper.getInputProcessor());
 	}
 
 	public void activeWeldJointHelper() {
 		this.mulInput.clear();
+		this.mulInput.addProcessor(mJointSelectedHelper.getInputProcessor());
 		this.mulInput.addProcessor(mWeldJointHelper.getInputProcessor());
 	}
 
 	public void activeRevoluteJointHelper() {
 		this.mulInput.clear();
+		this.mulInput.addProcessor(mJointSelectedHelper.getInputProcessor());
 		this.mulInput.addProcessor(mRevoluteJointHelper.getInputProcessor());
 	}
-
-	public void activeSelectHelper() {
-		this.mulInput.clear();
-		this.mulInput.addProcessor(mSelectedHelper.getInputProcessor());
-	}
-
+	
 	public void activeDistanceJointHelper() {
 		this.mulInput.clear();
 		this.mulInput.addProcessor(mJointSelectedHelper.getInputProcessor());
 		this.mulInput.addProcessor(mDistanceJointHelper.getInputProcessor());
+	}
+
+	//-----------------------
+	public void activeSelectHelper() {
+		this.mulInput.clear();
+		this.mulInput.addProcessor(mSelectedHelper.getInputProcessor());
 	}
 
 	public void activeScaleHelper() {

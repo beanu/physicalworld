@@ -20,7 +20,6 @@ public class SelectedHelper implements Shape {
 	Box2dAdapter adapter;
 	BodyData data;
 	boolean showProperty;
-//	boolean hasShowed;
 
 	public SelectedHelper(Box2dAdapter adapter) {
 		render = Engine.getShapeRenderer();
