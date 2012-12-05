@@ -15,8 +15,8 @@ public class PrismaticJointProperties extends JointProperties {
 		super();
 		// localAnchorX = new TextField("localAnchorX",skin);
 		// localAnchorY = new TextField("localAnchorY",skin);
-		localAxisAx = new HSlider("localAxisAx", 0, 800, 8, sliderStyle, labelStyle);
-		localAxisAy = new HSlider("localAxisAy", 0, 400, 4, sliderStyle, labelStyle);
+		localAxisAx = new HSlider("localAxisAx", 0, 100, 1, sliderStyle, labelStyle);
+		localAxisAy = new HSlider("localAxisAy", 0, 100, 1, sliderStyle, labelStyle);
 		lowerTranslation = new HSlider("lowerTranslation", 0, 100, 1, sliderStyle, labelStyle);
 		upperTranslation = new HSlider("upperTranslation", 0, 100, 1, sliderStyle, labelStyle);
 		motorSpeed = new HSlider("motorSpeed", 0, 100, 1, sliderStyle, labelStyle);

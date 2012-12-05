@@ -4,7 +4,7 @@ import info.u250.c2d.physical.box2d.loader.cbt.data.PulleyJointData;
 
 import com.zhaoyunhe.pw.widget.HSlider;
 
-
+//TODO groundAnchorBx have no effect
 public class PulleyJointProperties extends JointProperties{
 //	final TextField localAnchorAx,localAnchorAy,localAnchorBx,localAnchorBy;
 	final HSlider groundAnchorAx,groundAnchorAy,groundAnchorBx,groundAnchorBy;

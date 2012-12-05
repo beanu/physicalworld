@@ -2,6 +2,7 @@ package com.zhaoyunhe.pw.props.properties;
 
 import java.lang.reflect.Field;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -85,11 +86,13 @@ public class BindSupport {
 				public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 					try {
 						field.set(obj, Slider.class.cast(inputField).getValue());
+						Gdx.app.debug("value", field.getName()+":"+field.get(obj).toString());
 					} catch (IllegalArgumentException e) {
 						e.printStackTrace();
 					} catch (IllegalAccessException e) {
 						e.printStackTrace();
 					}
+
 				}
 				
 			});

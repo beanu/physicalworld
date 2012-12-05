@@ -52,13 +52,13 @@ public class JointPanel extends Table {
 		this.row().spaceBottom(20);
 		this.add(mButtonDistanceJoint);
 		this.row().spaceBottom(20);
-		this.add(mButtonFrictionJoint);
+		this.add(mButtonRevoluteJoint);
 		this.row().spaceBottom(20);
 		this.add(mButtonPrismaticJoint);
 		this.row().spaceBottom(20);
 		this.add(mButtonPulleyJoint);
 		this.row().spaceBottom(20);
-		this.add(mButtonRevoluteJoint);
+		this.add(mButtonFrictionJoint);
 		this.row().spaceBottom(20);
 		this.add(mButtonRopeJoint);
 		this.row().spaceBottom(20);

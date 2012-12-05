@@ -12,7 +12,7 @@ public class DistanceJointProperties extends JointProperties{
 //		localAnchorAy = new TextField("localAnchorAy",skin);
 //		localAnchorBx = new TextField("localAnchorBx",skin);
 //		localAnchorBy = new TextField("localAnchorBy",skin);
-		frequencyHz = new HSlider("frequencyHz",0,100,1,sliderStyle,labelStyle);
+		frequencyHz = new HSlider("frequencyHz",0,30,1,sliderStyle,labelStyle);
 		dampingRatio = new HSlider("dampingRatio",0,1,0.01f,sliderStyle,labelStyle);
 
 		this.row();
