@@ -5,17 +5,16 @@ import info.u250.c2d.engine.Engine;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider.SliderStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.zhaoyunhe.pw.widget.HSlider;
 
 public abstract class BodyProperties extends EditorProperties{
-	final Slider density;
-	final Slider friction;
-	final Slider restitution;
+	final HSlider density;
+	final HSlider friction;
+	final HSlider restitution;
 //	final Slider filter_categoryBits;
 //	final Slider filter_groupIndex;
 //	final Slider filter_maskBits;
@@ -41,9 +40,9 @@ public abstract class BodyProperties extends EditorProperties{
 		
 		LabelStyle labelStyle=new LabelStyle(Engine.getDefaultFont(), new Color(1, 1, 1, 1));
 		
-		density=new Slider(0, 1, 0.01f, false, style);
-		friction = new Slider(0, 1, 0.01f, false, style);
-		restitution = new Slider(0, 1, 0.01f, false, style);
+		density=new HSlider("density",0, 1, 0.01f, style,labelStyle);
+		friction = new HSlider("friction",0, 1, 0.01f, style,labelStyle);
+		restitution = new HSlider("restitution",0, 1, 0.01f, style,labelStyle);
 //		filter_categoryBits = new TextField("", skin) ;
 //		filter_groupIndex = new TextField("", skin) ;
 //		filter_maskBits = new TextField("",  skin) ;
@@ -52,7 +51,7 @@ public abstract class BodyProperties extends EditorProperties{
 //		angle = new TextField("angle", skin) ;
 //		centerX = new TextField("centerX", skin) ;
 //		centerY = new TextField("centerY", skin) ;
-		this.left();
+//		this.left();
 		
 //		this.add(new Label("name:", skin));
 //		this.add(this.name).colspan(3).fillX();
@@ -73,15 +72,14 @@ public abstract class BodyProperties extends EditorProperties{
 //		this.add(this.userData).colspan(3).fillX();
 //		this.row();
 		
-		this.row().spaceBottom(20);
-		this.add(new Label("density", labelStyle));
-		this.add(this.density).spaceRight(20);
-		this.add(new Label("friction", labelStyle));
+		this.row();
+		this.add(this.density);
 		this.add(this.friction);
-		this.row().spaceBottom(20);
-		this.add(new Label("restitution", labelStyle));
 		this.add(this.restitution);
-		this.row().spaceBottom(20);
+//		this.row();
+//		this.add(new Label("density", labelStyle));
+//		this.add(new Label("friction", labelStyle));
+//		this.add(new Label("restitution", labelStyle));
 		
 //		this.add(new Label("sensor", labelStyle));
 //		this.add(this.sensor);
@@ -108,9 +106,9 @@ public abstract class BodyProperties extends EditorProperties{
 //		bind(data, "res", res);
 //		bind(data, "isSensor", sensor);
 //		bind(data, "isDynamic", dynamic);
-		bind(data, "density", density);
-		bind(data, "friction", friction);
-		bind(data, "restitution", restitution);
+		bind(data, "density", density.slider);
+		bind(data, "friction", friction.slider);
+		bind(data, "restitution", restitution.slider);
 //		bind(data, "angle", angle);
 //		bind(BodyData.class.cast(data).center, "x", centerX);
 //		bind(BodyData.class.cast(data).center, "y", centerY);

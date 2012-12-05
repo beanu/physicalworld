@@ -20,6 +20,5 @@ public class BoxBodyProperties extends BodyProperties{
 //		bind(data, "width", width);
 //		bind(data, "height", height);
 		super.update(data);
-		
 	}
 }

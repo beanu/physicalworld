@@ -16,6 +16,7 @@ public class WeldJointProperties extends JointProperties{
 //		this.add(this.localAnchorY).colspan(2).fillX();
 //		this.row();
 		
+		this.add(collideConnected);
 		this.pack();
 	}
 	@Override

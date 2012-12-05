@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox.CheckBoxStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider.SliderStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
@@ -15,8 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 public abstract class JointProperties extends EditorProperties {
 	final CheckBox collideConnected;
-	// final TextField name;
-	// final TextField type;
+	
 	final TextureAtlas atlas;
 	final SliderStyle sliderStyle;
 	final LabelStyle labelStyle;
@@ -38,20 +36,11 @@ public abstract class JointProperties extends EditorProperties {
 		checkboxStyle.fontColor=new Color(1, 1, 1, 1);
 		
 		collideConnected = new CheckBox("collideConnected", checkboxStyle);
-		// name = new TextField("name", skin);
-		// type = new TextField("", "", skin);
 
-		// this.add(new Label("name:", skin));
-		// this.add(this.name).colspan(3).fillX();
-		this.row();
 
-		this.add(new Label("collideConnected", labelStyle));
-		this.add(this.collideConnected);
-		this.pack();
 	}
 
 	public void update(Object data) {
 		bind(data, "collideConnected", collideConnected);
-		// bind(data, "name", name);
 	}
 }

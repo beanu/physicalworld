@@ -75,11 +75,11 @@ joint-1
   index: -1
 slider_bg
   rotate: false
-  xy: 102, 420
-  size: 104, 10
-  split: 5, 5, 1, 1
-  pad: 5, 5, 0, 0
-  orig: 104, 10
+  xy: 102, 326
+  size: 10, 104
+  split: 1, 1, 5, 5
+  pad: 0, 0, 5, 5
+  orig: 10, 104
   offset: 0, 0
   index: -1
 toggle_off

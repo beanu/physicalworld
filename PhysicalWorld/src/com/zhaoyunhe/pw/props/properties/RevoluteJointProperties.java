@@ -1,12 +1,11 @@
 package com.zhaoyunhe.pw.props.properties;
 
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Slider;
+import com.zhaoyunhe.pw.widget.HSlider;
 
 public class RevoluteJointProperties extends JointProperties {
 	// final TextField localAnchorX,localAnchorY,
-	final Slider lowerAngle, upperAngle, motorSpeed, maxMotorTorque;
+	final HSlider lowerAngle, upperAngle, motorSpeed, maxMotorTorque;
 
 	final CheckBox enableLimit, enableMotor;
 
@@ -14,43 +13,24 @@ public class RevoluteJointProperties extends JointProperties {
 		super();
 		// localAnchorX = new TextField("localAnchorX",skin);
 		// localAnchorY = new TextField("localAnchorY",skin);
-		lowerAngle = new Slider(0, 360, 1, false, sliderStyle);
-		upperAngle = new Slider(0, 360, 1, false, sliderStyle);
-		motorSpeed = new Slider(0, 100, 1, false, sliderStyle);
-		maxMotorTorque = new Slider(0, 100, 1, false, sliderStyle);
+		lowerAngle = new HSlider("lowerAngle",0, 360, 1, sliderStyle,labelStyle);
+		upperAngle = new HSlider("upperAngle",0, 360, 1, sliderStyle,labelStyle);
+		motorSpeed = new HSlider("motorSpeed",0, 100, 1, sliderStyle,labelStyle);
+		maxMotorTorque = new HSlider("maxMotorTorque",0, 100, 1, sliderStyle,labelStyle);
 
 		enableLimit = new CheckBox("enableLimit", checkboxStyle);
 		enableMotor = new CheckBox("enableMotor", checkboxStyle);
-		//
-		//
-		// this.add(new Label("localAnchorX", skin)).colspan(2);
-		// this.add(this.localAnchorX).colspan(2).fillX();
-		// this.row();
-		// this.add(new Label("localAnchorY", skin)).colspan(2);
-		// this.add(this.localAnchorY).colspan(2).fillX();
-		this.row();
-
-		this.add(new Label("enableLimit", labelStyle)).colspan(3);
-		this.add(enableLimit).colspan(1).fillX();
-		this.row();
-
-		this.add(new Label("lowerAngle", labelStyle)).colspan(2);
-		this.add(this.lowerAngle).colspan(2).fillX();
-		this.row();
-		this.add(new Label("upperAngle", labelStyle)).colspan(2);
-		this.add(this.upperAngle).colspan(2).fillX();
-		this.row();
-
-		this.add(new Label("enableMotor", labelStyle)).colspan(3);
-		this.add(enableMotor).colspan(1).fillX();
-		this.row();
-
-		this.add(new Label("motorSpeed", labelStyle)).colspan(2);
-		this.add(this.motorSpeed).colspan(2).fillX();
-		this.row();
-		this.add(new Label("maxMotorTorque", labelStyle)).colspan(2);
-		this.add(this.maxMotorTorque).colspan(2).fillX();
-		// this.row();
+		
+		
+		
+		this.add(this.lowerAngle);
+		this.add(this.upperAngle);
+		this.add(this.motorSpeed);
+		this.add(this.maxMotorTorque);
+		
+		this.add(enableLimit);
+		this.add(enableMotor);
+		this.add(collideConnected);
 		this.pack();
 	}
 
@@ -60,10 +40,10 @@ public class RevoluteJointProperties extends JointProperties {
 		// localAnchorX);
 		// bind(RevoluteJointData.class.cast(data).localAnchorA, "y",
 		// localAnchorY);
-		 bind(data,"lowerAngle",lowerAngle);
-		 bind(data,"upperAngle",upperAngle);
-		 bind(data,"motorSpeed",motorSpeed);
-		 bind(data,"maxMotorTorque",maxMotorTorque);
+		 bind(data,"lowerAngle",lowerAngle.slider);
+		 bind(data,"upperAngle",upperAngle.slider);
+		 bind(data,"motorSpeed",motorSpeed.slider);
+		 bind(data,"maxMotorTorque",maxMotorTorque.slider);
 		 bind(data,"enableLimit",enableLimit);
 		 bind(data,"enableMotor",enableMotor);
 		super.update(data);

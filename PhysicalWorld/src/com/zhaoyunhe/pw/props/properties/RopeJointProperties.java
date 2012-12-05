@@ -1,11 +1,10 @@
 package com.zhaoyunhe.pw.props.properties;
 
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Slider;
+import com.zhaoyunhe.pw.widget.HSlider;
 
 public class RopeJointProperties extends JointProperties {
 	// final TextField localAnchorAx,localAnchorAy,localAnchorBx,localAnchorBy,
-	final Slider maxLength;
+	final HSlider maxLength;
 
 	public RopeJointProperties() {
 		super();
@@ -13,23 +12,10 @@ public class RopeJointProperties extends JointProperties {
 		// localAnchorAy = new TextField("localAnchorAy",skin);
 		// localAnchorBx = new TextField("localAnchorBx",skin);
 		// localAnchorBy = new TextField("localAnchorBy",skin);
-		maxLength = new Slider(0, 100, 1, false, sliderStyle);
-		//
-		// this.add(new Label("anchorA_x", skin)).colspan(2);
-		// this.add(this.localAnchorAx).colspan(2).fillX();
-		// this.row();
-		// this.add(new Label("anchorA_y", skin)).colspan(2);
-		// this.add(this.localAnchorAy).colspan(2).fillX();
-		// this.row();
-		// this.add(new Label("anchorB_x", skin)).colspan(2);
-		// this.add(this.localAnchorBx).colspan(2).fillX();
-		// this.row();
-		// this.add(new Label("anchorB_y", skin)).colspan(2);
-		// this.add(this.localAnchorBy).colspan(2).fillX();
-		 this.row();
-		 this.add(new Label("maxLength", labelStyle));
-		 this.add(this.maxLength);
-		// this.row();
+		maxLength = new HSlider("maxLength", 0, 100, 1, sliderStyle, labelStyle);
+
+		this.add(this.maxLength);
+		this.add(collideConnected);
 		this.pack();
 	}
 
@@ -43,7 +29,7 @@ public class RopeJointProperties extends JointProperties {
 		// localAnchorBx);
 		// bind(RopeJointData.class.cast(data).localAnchorB, "y",
 		// localAnchorBy);
-		 bind(data,"maxLength",maxLength);
+		bind(data, "maxLength", maxLength.slider);
 		super.update(data);
 	}
 }

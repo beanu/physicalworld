@@ -2,14 +2,13 @@ package com.zhaoyunhe.pw.props.properties;
 
 import info.u250.c2d.physical.box2d.loader.cbt.data.PulleyJointData;
 
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Slider;
+import com.zhaoyunhe.pw.widget.HSlider;
 
 
 public class PulleyJointProperties extends JointProperties{
 //	final TextField localAnchorAx,localAnchorAy,localAnchorBx,localAnchorBy;
-	final Slider groundAnchorAx,groundAnchorAy,groundAnchorBx,groundAnchorBy;
-	final Slider ratio;
+	final HSlider groundAnchorAx,groundAnchorAy,groundAnchorBx,groundAnchorBy;
+	final HSlider ratio;
 	public PulleyJointProperties(){
 		super();
 //		localAnchorAx = new TextField("",skin);
@@ -17,41 +16,19 @@ public class PulleyJointProperties extends JointProperties{
 //		localAnchorBx = new TextField("",skin);
 //		localAnchorBy = new TextField("",skin);
 //		
-		groundAnchorAx = new Slider(0,800,8,false,sliderStyle);
-		groundAnchorAy = new Slider(0,400,4,false,sliderStyle);
-		groundAnchorBx = new Slider(0,800,8,false,sliderStyle);
-		groundAnchorBy = new Slider(0,400,4,false,sliderStyle);
-		ratio = new Slider(0, 1, 0.01f, false, sliderStyle);
-//		
-//		
-//		this.add(new Label("anchorA_x", skin)).colspan(2);
-//		this.add(this.localAnchorAx).colspan(2).fillX();
-//		this.row();
-//		this.add(new Label("anchorA_y", skin)).colspan(2);
-//		this.add(this.localAnchorAy).colspan(2).fillX();
-//		this.row();
-//		this.add(new Label("anchorB_x", skin)).colspan(2);
-//		this.add(this.localAnchorBx).colspan(2).fillX();
-//		this.row();
-//		this.add(new Label("anchorB_y", skin)).colspan(2);
-//		this.add(this.localAnchorBy).colspan(2).fillX();
-		this.row();
-		this.add(new Label("ratio", labelStyle)).colspan(2);
-		this.add(this.ratio).colspan(2).fillX();
-		this.row();
-		this.add(new Label("groundAnchorAx", labelStyle)).colspan(2);
-		this.add(this.groundAnchorAx).colspan(2).fillX();
-		this.row();
-		this.add(new Label("groundAnchorAy", labelStyle)).colspan(2);
-		this.add(this.groundAnchorAy).colspan(2).fillX();
-		this.row();
-		this.add(new Label("groundAnchorBx", labelStyle)).colspan(2);
-		this.add(this.groundAnchorBx).colspan(2).fillX();
-		this.row();
-		this.add(new Label("groundAnchorBx", labelStyle)).colspan(2);
-		this.add(this.groundAnchorBy).colspan(2).fillX();
-//		this.row();
+		groundAnchorAx = new HSlider("groundAnchorAx",0,800,8,sliderStyle,labelStyle);
+		groundAnchorAy = new HSlider("groundAnchorAy",0,400,4,sliderStyle,labelStyle);
+		groundAnchorBx = new HSlider("groundAnchorBx",0,800,8,sliderStyle,labelStyle);
+		groundAnchorBy = new HSlider("groundAnchorBy",0,400,4,sliderStyle,labelStyle);
+		ratio = new HSlider("ratio",0, 1, 0.01f, sliderStyle,labelStyle);
 		
+		this.add(this.ratio);
+		this.add(this.groundAnchorAx);
+		this.add(this.groundAnchorAy);
+		this.add(this.groundAnchorBx);
+		this.add(this.groundAnchorBy);
+		
+		this.add(collideConnected);
 		this.pack();
 	}
 	@Override
@@ -61,10 +38,10 @@ public class PulleyJointProperties extends JointProperties{
 //		bind(PulleyJointData.class.cast(data).localAnchorB, "x", localAnchorBx);
 //		bind(PulleyJointData.class.cast(data).localAnchorB, "y", localAnchorBy);
 		bind(data,"ratio",ratio);
-		bind(PulleyJointData.class.cast(data).groundAnchorA, "x", groundAnchorAx);
-		bind(PulleyJointData.class.cast(data).groundAnchorA, "y", groundAnchorAy);
-		bind(PulleyJointData.class.cast(data).groundAnchorB, "x", groundAnchorBx);
-		bind(PulleyJointData.class.cast(data).groundAnchorB, "y", groundAnchorBy);
+		bind(PulleyJointData.class.cast(data).groundAnchorA, "x", groundAnchorAx.slider);
+		bind(PulleyJointData.class.cast(data).groundAnchorA, "y", groundAnchorAy.slider);
+		bind(PulleyJointData.class.cast(data).groundAnchorB, "x", groundAnchorBx.slider);
+		bind(PulleyJointData.class.cast(data).groundAnchorB, "y", groundAnchorBy.slider);
 		super.update(data);
 	}
 }
