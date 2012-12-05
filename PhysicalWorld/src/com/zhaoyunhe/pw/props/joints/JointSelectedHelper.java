@@ -134,9 +134,10 @@ public class JointSelectedHelper implements Shape {
 					supportPoint.add(offset.x,offset.y );
 					tmp.set(Engine.screenToWorld(x, y));
 //					Engine.getEventManager().fire(Events.UPDATE_BOXED_PANEL,data);
-					if(offset.len2()!=0){
-						showProperty = false;
-					}
+
+//					if(offset.len2()!=0){
+//						showProperty = false;
+//					}
 				}
 				return false;
 			}

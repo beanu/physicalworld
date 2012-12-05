@@ -44,8 +44,9 @@ public abstract class JointProperties extends EditorProperties {
 		// this.add(new Label("name:", skin));
 		// this.add(this.name).colspan(3).fillX();
 		this.row();
-		this.add(new Label("collideConnected", labelStyle)).colspan(3);
-		this.add(this.collideConnected).colspan(1).fillX();
+
+		this.add(new Label("collideConnected", labelStyle));
+		this.add(this.collideConnected);
 		this.pack();
 	}
 

@@ -52,11 +52,13 @@ public class UIStage extends C2dStage {
 				boolean show=(Boolean) event.getSource();
 				if(show){
 					if(!propertiesPanel.hasShowed()){
+						propertiesPanel.setPosition(0, -propertiesPanel.getHeight());
 						propertiesPanel.addAction(Actions.moveBy(0, propertiesPanel.getHeight(), 0.2f));
 						propertiesPanel.setShowed(true);
 					}
 				}else{
 					if(propertiesPanel.hasShowed()){
+						propertiesPanel.setPosition(0, 0);
 						propertiesPanel.addAction(Actions.moveBy(0, -propertiesPanel.getHeight(), 0.2f));
 						propertiesPanel.setShowed(false);
 					}
