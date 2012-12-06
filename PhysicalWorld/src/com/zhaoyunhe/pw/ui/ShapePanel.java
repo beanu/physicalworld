@@ -23,6 +23,7 @@ public class ShapePanel extends Group {
 
 	private Button mButtonBox;
 	private Button mButtonCircle;
+	private Button mButtonPolygon;
 	private Button mButtonJoint;
 
 	private Image tools_run;// TODO delete
@@ -34,73 +35,94 @@ public class ShapePanel extends Group {
 		atlas = Engine.resource("atlas");
 		this.adapter = adapter;
 
-		mButtonBox = new Button(new TextureRegionDrawable(atlas.findRegion("button_box")));
-		mButtonCircle = new Button(new TextureRegionDrawable(atlas.findRegion("button_circle")));
-		mButtonJoint = new Button(new TextureRegionDrawable(atlas.findRegion("button_joint")));
+		mButtonBox = new Button(new TextureRegionDrawable(
+				atlas.findRegion("button_box")));
+		mButtonCircle = new Button(new TextureRegionDrawable(
+				atlas.findRegion("button_circle")));
+		mButtonPolygon = new Button(new TextureRegionDrawable(
+				atlas.findRegion("button_polygon")));
+		mButtonJoint = new Button(new TextureRegionDrawable(
+				atlas.findRegion("button_joint")));
 
 		int offset = 60;
 		mButtonJoint.setPosition(0, 0);
 		mButtonCircle.setPosition(0, offset);
-		mButtonBox.setPosition(0, offset * 2);
+		mButtonPolygon.setPosition(0, offset * 2);
+		mButtonBox.setPosition(0, offset * 3);
 
 		setButtonListener();
 		this.addActor(mButtonBox);
 		this.addActor(mButtonCircle);
+		this.addActor(mButtonPolygon);
 		this.addActor(mButtonJoint);
-		
-		this.setHeight(offset*4);
+
+		this.setHeight(offset * 4);
 	}
 
 	private void setButtonListener() {
-		
+
 		mButtonBox.addListener(new ChangeListener() {
 
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				if(mButtonBox.isChecked()){
+				if (mButtonBox.isChecked()) {
 					unCheckButton(mButtonBox);
 					mButtonBox.addAction(Actions.moveBy(20, 0, 0.2f));
 					adapter.activeBoxHelper();
-					Gdx.app.debug("debug", mButtonBox.isChecked()+"mButtonBox click");
-				}else{
+				} else {
 					mButtonBox.addAction(Actions.moveBy(-20, 0, 0.2f));
 					adapter.activeSelectHelper();
-					Gdx.app.debug("debug", mButtonBox.isChecked()+"mButtonBox back");
 				}
 			}
 		});
 
 		mButtonCircle.addListener(new ChangeListener() {
-			
+
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				if(mButtonCircle.isChecked()){
+				if (mButtonCircle.isChecked()) {
 					unCheckButton(mButtonCircle);
 					mButtonCircle.addAction(Actions.moveBy(20, 0, 0.2f));
 					adapter.activeCircleHelper();
-					Gdx.app.debug("debug", "circleImage clicked");
-				}else{
+				} else {
 					mButtonCircle.addAction(Actions.moveBy(-20, 0, 0.2f));
 					adapter.activeSelectHelper();
-					Gdx.app.debug("debug", "circleImage back");
 				}
-				
+
+			}
+		});
+
+		mButtonPolygon.addListener(new ChangeListener() {
+
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				if (mButtonPolygon.isChecked()) {
+					unCheckButton(mButtonPolygon);
+					mButtonPolygon.addAction(Actions.moveBy(20, 0, 0.2f));
+					adapter.activeCircleHelper();
+				} else {
+					mButtonPolygon.addAction(Actions.moveBy(-20, 0, 0.2f));
+					adapter.activeSelectHelper();
+				}
+
 			}
 		});
 
 		mButtonJoint.addListener(new ChangeListener() {
-			
+
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				if(mButtonJoint.isChecked()){
+				if (mButtonJoint.isChecked()) {
 					unCheckButton(mButtonJoint);
 					mButtonJoint.addAction(Actions.moveBy(20, 0, 0.2f));
-					Engine.getEventManager().fire(Events.MOVE_JOINT_PANEL,true);
-				}else{
+					Engine.getEventManager()
+							.fire(Events.MOVE_JOINT_PANEL, true);
+				} else {
 					mButtonJoint.addAction(Actions.moveBy(-20, 0, 0.2f));
-					Engine.getEventManager().fire(Events.MOVE_JOINT_PANEL,false);
+					Engine.getEventManager().fire(Events.MOVE_JOINT_PANEL,
+							false);
 				}
-				
+
 			}
 		});
 
@@ -114,7 +136,8 @@ public class ShapePanel extends Group {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				if (tools_run.getDrawable() == playRegion) {
-					Engine.getEventManager().fire(Events.MOVE_PROPERTIES_PANEL, false);
+					Engine.getEventManager().fire(Events.MOVE_PROPERTIES_PANEL,
+							false);
 					Cb2World.getInstance().dispose();
 					Cb2World.getInstance().installDefaultWorld();
 
@@ -147,16 +170,16 @@ public class ShapePanel extends Group {
 		});
 
 		tools_run.setDrawable(playRegion);
-//		UiUtils.centerActor(tools_run);
+		// UiUtils.centerActor(tools_run);
 		tools_run.setX(0);
 		tools_run.setY(180);
 		this.addActor(tools_run);
 	}
-	
+
 	private void unCheckButton(Button btn) {
 		for (Actor actor : this.getChildren()) {
 			if (actor instanceof Button) {
-				if (((Button) actor).isChecked() && ((Button) actor)!= btn ) {
+				if (((Button) actor).isChecked() && ((Button) actor) != btn) {
 					((Button) actor).setChecked(false);
 				}
 			}

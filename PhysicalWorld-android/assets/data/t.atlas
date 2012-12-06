@@ -45,6 +45,13 @@ button_joint
   orig: 109, 53
   offset: 0, 0
   index: -1
+button_polygon
+  rotate: false
+  xy: 213, 487
+  size: 109, 53
+  orig: 109, 53
+  offset: 0, 0
+  index: -1
 tools-pause
   rotate: false
   xy: 925, 958
@@ -54,7 +61,7 @@ tools-pause
   index: -1
 tools-run
   rotate: false
-  xy: 213, 476
+  xy: 802, 787
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
@@ -68,14 +75,14 @@ joint-1-down
   index: -1
 joint-1
   rotate: false
-  xy: 802, 817
+  xy: 102, 396
   size: 84, 34
   orig: 84, 34
   offset: 0, 0
   index: -1
 slider_bg
   rotate: false
-  xy: 102, 326
+  xy: 802, 681
   size: 10, 104
   split: 1, 1, 5, 5
   pad: 0, 0, 5, 5
@@ -84,14 +91,14 @@ slider_bg
   index: -1
 toggle_off
   rotate: false
-  xy: 925, 933
+  xy: 213, 462
   size: 53, 23
   orig: 53, 23
   offset: 0, 0
   index: -1
 toggle_on
   rotate: false
-  xy: 213, 451
+  xy: 324, 517
   size: 53, 23
   orig: 53, 23
   offset: 0, 0
@@ -105,7 +112,7 @@ slider_knob
   index: -1
 cursor
   rotate: false
-  xy: 991, 1002
+  xy: 925, 936
   size: 20, 20
   orig: 20, 20
   offset: 0, 0
