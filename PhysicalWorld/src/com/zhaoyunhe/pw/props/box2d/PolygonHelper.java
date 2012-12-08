@@ -1,8 +1,8 @@
 package com.zhaoyunhe.pw.props.box2d;
 
 import info.u250.c2d.engine.Engine;
-import info.u250.c2d.physical.box2d.loader.cbt.data.CircleData;
 import info.u250.c2d.physical.box2d.loader.cbt.data.PolygonData;
+import info.u250.c2d.utils.Mathutils;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
@@ -13,19 +13,25 @@ import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 import com.zhaoyunhe.pw.props.Box2dAdapter;
 import com.zhaoyunhe.pw.props.Shape;
 
 public class PolygonHelper implements Shape {
 	final ShapeRenderer render;
 	PolygonData data;
+	
 	final Vector2 firstPoint = new Vector2();
+	final Vector2 currentPoint = new Vector2();
 	final Vector2 lastPoint = new Vector2();
-	int currentPoint = -1;
+	final Array<Vector2> pointList = new Array<Vector2>();
+
+	int currentPointer = -1;
 	Box2dAdapter adapter;
 
 	public PolygonHelper(Box2dAdapter adapter) {
 		this.render = Engine.getShapeRenderer();
+		this.render.setColor(new Color(1, 1, 1, 0.4f));
 		this.adapter = adapter;
 	}
 
@@ -33,24 +39,16 @@ public class PolygonHelper implements Shape {
 	public void render(float delta) {
 
 		Gdx.gl.glEnable(GL10.GL_BLEND);
-		if (currentPoint == 1) {
-			float dst = firstPoint.dst(lastPoint);
-			if (dst > 0) {
-				render.setColor(new Color(1, 1, 1, 0.4f));
-				
-				for(int i=0;i<data.polygons.size-1;i++){
-					Vector2[] point=data.polygons.get(i);
-					Vector2[] nextPoint=data.polygons.get(i+1);
-					
+		if (currentPointer == 1) {
+//			for (Vector2[] polygon : pointList) {
+				for (int i = 0; i < pointList.size - 1; i++) {
 					render.begin(ShapeType.Line);
-					render.line(point[x], y, x2, y2);
+					render.line(pointList.get(i).x, pointList.get(i).y, pointList.get(i+1).x,pointList.get(i+1).y);
 					render.end();
 				}
-				
-			}
+//			}
 		}
 		Gdx.gl.glDisable(GL10.GL_BLEND);
-
 	}
 
 	@Override
@@ -60,13 +58,17 @@ public class PolygonHelper implements Shape {
 			@Override
 			public boolean touchDown(int x, int y, int pointer, int button) {
 				if (button == Buttons.LEFT) {
-					if (-1 == currentPoint) {
+					if (-1 == currentPointer) {
 						firstPoint.set(Engine.screenToWorld(x, y));
-						secondPoint.set(Engine.screenToWorld(x, y));
-						data = new CircleData();
-//						Engine.getEventManager().fire(Events.UPDATE_BOXED_PANEL, data);
-						currentPoint = 1;
-						// do start
+						currentPoint.set(Engine.screenToWorld(x, y));
+
+						data = new PolygonData();
+						pointList.clear();
+						pointList.add(firstPoint.cpy());
+
+						// Engine.getEventManager().fire(Events.UPDATE_BOXED_PANEL,
+						// data);
+						currentPointer = 1;
 					}
 				}
 				return true;
@@ -74,26 +76,47 @@ public class PolygonHelper implements Shape {
 
 			@Override
 			public boolean touchDragged(int screenX, int screenY, int pointer) {
-				if (1 == currentPoint) {
+				if (1 == currentPointer) {
 					// do move
-					secondPoint.set(Engine.screenToWorld(screenX, screenY));
+					if (Engine.screenToWorld(screenX, screenY)
+							.dst(currentPoint) >= 10) {
+						currentPoint
+								.set(Engine.screenToWorld(screenX, screenY));
+						Vector2 point = new Vector2();
+						point.set(Engine.screenToWorld(screenX, screenY));
+						pointList.add(point);
+					}
 				}
 				return super.touchDragged(screenX, screenY, pointer);
 			}
 
 			@Override
 			public boolean touchUp(int x, int y, int pointer, int button) {
-				if (1 == currentPoint) {
-					secondPoint.set(Engine.screenToWorld(x, y));
-					if (firstPoint.dst(secondPoint) > 0) {
-						data.radius = firstPoint.dst(secondPoint);
-						data.center.set(firstPoint);
+				if (1 == currentPointer) {
+					lastPoint.set(Engine.screenToWorld(x, y));
+					pointList.add(lastPoint.cpy());
+
+					int count=pointList.size/3;
+					for(int i=0;i<count;i++){
+						int temp=i*3;
+						Vector2[] points = new Vector2[3];
+						points[0]=pointList.get(temp);
+						points[1]=pointList.get(temp+1);
+						points[2]=pointList.get(temp+2);
+						if (Mathutils.isClockwise(points[0], points[1], points[2])) {
+							Vector2 vv = points[0];
+							points[0] = points[2];
+							points[2] = vv;
+						}
 						
-						adapter.data.bodyDatas.add(data);
-//						Engine.getEventManager().fire(Events.UPDATE_BOXED_PANEL, data);
-						// do end
+						data.polygons.add(points);
 					}
-					currentPoint = -1;
+
+					data.center.set(firstPoint);//TODO error
+					adapter.data.bodyDatas.add(data);
+					// Engine.getEventManager().fire(Events.UPDATE_BOXED_PANEL,data);
+
+					currentPointer = -1;
 					data = null;
 				}
 				return super.touchUp(x, y, pointer, button);

@@ -5,7 +5,6 @@ import info.u250.c2d.physical.box2d.loader.cbt.data.BoxData;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Color;
@@ -73,14 +72,14 @@ public class BoxHelper implements Shape {
 				return super.touchDragged(screenX, screenY, pointer);
 			}
 
-			@Override
-			public boolean keyDown(int keycode) {
-				if(keycode == Keys.ESCAPE){
-					currentPoint = -1;
-					data = null;
-				}
-				return super.keyDown(keycode);
-			}
+//			@Override
+//			public boolean keyDown(int keycode) {
+//				if(keycode == Keys.ESCAPE){
+//					currentPoint = -1;
+//					data = null;
+//				}
+//				return super.keyDown(keycode);
+//			}
 			@Override
 			public boolean touchUp(int x, int y, int pointer, int button) {
 				if(1==currentPoint){

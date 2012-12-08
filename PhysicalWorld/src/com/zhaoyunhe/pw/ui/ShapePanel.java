@@ -56,7 +56,7 @@ public class ShapePanel extends Group {
 		this.addActor(mButtonPolygon);
 		this.addActor(mButtonJoint);
 
-		this.setHeight(offset * 4);
+		this.setHeight(offset * 5);
 	}
 
 	private void setButtonListener() {
@@ -99,7 +99,7 @@ public class ShapePanel extends Group {
 				if (mButtonPolygon.isChecked()) {
 					unCheckButton(mButtonPolygon);
 					mButtonPolygon.addAction(Actions.moveBy(20, 0, 0.2f));
-					adapter.activeCircleHelper();
+					adapter.activePolygonHelper();
 				} else {
 					mButtonPolygon.addAction(Actions.moveBy(-20, 0, 0.2f));
 					adapter.activeSelectHelper();
@@ -172,7 +172,7 @@ public class ShapePanel extends Group {
 		tools_run.setDrawable(playRegion);
 		// UiUtils.centerActor(tools_run);
 		tools_run.setX(0);
-		tools_run.setY(180);
+		tools_run.setY(230);
 		this.addActor(tools_run);
 	}
 

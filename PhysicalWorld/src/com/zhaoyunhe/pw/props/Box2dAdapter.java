@@ -25,6 +25,7 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.zhaoyunhe.pw.IFileIO;
 import com.zhaoyunhe.pw.props.box2d.BoxHelper;
 import com.zhaoyunhe.pw.props.box2d.CircleHelper;
+import com.zhaoyunhe.pw.props.box2d.PolygonHelper;
 import com.zhaoyunhe.pw.props.box2d.RotateHelper;
 import com.zhaoyunhe.pw.props.box2d.ScaleHelper;
 import com.zhaoyunhe.pw.props.box2d.SelectedHelper;
@@ -41,6 +42,7 @@ import com.zhaoyunhe.pw.props.joints.WheelJointHelper;
 public class Box2dAdapter extends ShapeGroup implements IFileIO {
 	final BoxHelper mBoxHelper;
 	final CircleHelper mCircleHelper;
+	final PolygonHelper mPolygonHelper;
 	final RotateHelper mRotateHelper;
 	final ScaleHelper mScaleHelper;
 	final SelectedHelper mSelectedHelper;
@@ -65,6 +67,7 @@ public class Box2dAdapter extends ShapeGroup implements IFileIO {
 	public Box2dAdapter() {
 		mBoxHelper = new BoxHelper(this);
 		mCircleHelper = new CircleHelper(this);
+		mPolygonHelper=new PolygonHelper(this);
 		mRotateHelper = new RotateHelper(this);
 		mScaleHelper = new ScaleHelper(this);
 		mSelectedHelper = new SelectedHelper(this);
@@ -87,6 +90,7 @@ public class Box2dAdapter extends ShapeGroup implements IFileIO {
 		// add to group
 		this.add(mBoxHelper);
 		this.add(mCircleHelper);
+		this.add(mPolygonHelper);
 		this.add(mRotateHelper);
 		this.add(mScaleHelper);
 		this.add(mSelectedHelper);
@@ -199,7 +203,6 @@ public class Box2dAdapter extends ShapeGroup implements IFileIO {
 							@Override
 							public void after(Cb2Object obj) {
 								obj.data.body.setSleepingAllowed(true);
-								;
 								obj.data.body.setAwake(false);
 							}
 						}));
@@ -285,6 +288,12 @@ public class Box2dAdapter extends ShapeGroup implements IFileIO {
 		this.mulInput.addProcessor(mRotateHelper.getInputProcessor());
 	}
 
+	public void activePolygonHelper() {
+		this.mulInput.clear();
+		this.mulInput.addProcessor(mSelectedHelper.getInputProcessor());
+		this.mulInput.addProcessor(mPolygonHelper.getInputProcessor());
+	}
+	
 	public void activeCircleHelper() {
 		this.mulInput.clear();
 		this.mulInput.addProcessor(mSelectedHelper.getInputProcessor());
